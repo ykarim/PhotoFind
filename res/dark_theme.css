@@ -1,0 +1,14 @@
+* {
+    -fx-primary: #607d8b;
+    -fx-secondary: #FFFF8D;
+    -fx-primarytext: #B2B2B2;
+
+}
+
+.root {
+    -fx-background-color: #b0bec5;
+}
+
+.title {
+    -fx-background-color: #607d8b;
+}
