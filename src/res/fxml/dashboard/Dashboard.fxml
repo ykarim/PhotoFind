@@ -11,11 +11,11 @@
             prefWidth="600.0" styleClass="root" xmlns="http://javafx.com/javafx/8.0.112"
             fx:controller="ui.dashboard.DashboardController">
     <stylesheets>
-        <URL value="@../../../res/dark_theme.css"/>
+        <URL value="@../stylesheets/dark_theme.css"/>
     </stylesheets>
     <children>
         <AnchorPane id="HeaderPane" fx:id="HeaderPane" prefHeight="80.0" prefWidth="600.0" styleClass="title"
-                    stylesheets="@../../../res/dark_theme.css">
+                    stylesheets="@../stylesheets/dark_theme.css">
             <children>
                 <FontAwesomeIconView id="BarsIcon" fx:id="BarsIcon" glyphName="BARS" layoutX="14.0" layoutY="48.0"
                                      size="25" strokeType="OUTSIDE" strokeWidth="0.0"/>
