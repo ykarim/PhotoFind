@@ -1,5 +1,8 @@
 package media;
 
+import media.descriptors.Description;
+import media.descriptors.Tag;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -10,13 +13,29 @@ public class Picture extends MediaFile {
     //Title of picture
     private String name;
     //List of Tags associated with picture
-    private ArrayList<Tag<String, Double>> tags = new ArrayList<>();
+    private ArrayList<Tag> tags = new ArrayList<>();
+    //Description of picture
+    private Description description;
 
-    Picture(File file, Long id, String name, ArrayList<Tag<String, Double>> tags) {
+    Picture(File file, Long id, String name) {
+        super(file);
+        this.id = id;
+        this.name = name;
+    }
+
+    Picture(File file, Long id, String name, ArrayList<Tag> tags) {
         super(file);
         this.id = id;
         this.name = name;
         this.tags = tags;
+    }
+
+    Picture(File file, Long id, String name, ArrayList<Tag> tags, Description description) {
+        super(file);
+        this.id = id;
+        this.name = name;
+        this.tags = tags;
+        this.description = description;
     }
 
     public Long getId() {
@@ -31,27 +50,40 @@ public class Picture extends MediaFile {
         this.name = name;
     }
 
-    public ArrayList<Tag<String, Double>> getTags() {
+    public ArrayList<Tag> getTags() {
         return tags;
     }
 
-    public void addTag(String tagName, double confidence) {
-        tags.add(new Tag<>(tagName, confidence));
+    public Description getDescription() {
+        return description;
     }
 
-    public void addTag(Tag<String, Double> tag) {
+    public void addTag(String tagName, double confidence) {
+        tags.add(new Tag(tagName, confidence));
+    }
+
+    public void addTag(Tag tag) {
         tags.add(tag);
     }
 
-    public void removeTag(Tag<String, Double> tag) {
+    public void removeTag(Tag tag) {
         tags.remove(tag);
     }
 
     public void removeTag(String tagName) {
-        for (Tag<String, Double> tag : tags) {
+        for (Tag tag : tags) {
             if (tag.getName().equals(tagName)) {
                 tags.remove(tag);
             }
         }
+    }
+
+    //Update or add?
+    public void addTags(ArrayList<Tag> tags) {
+        this.tags = tags;
+    }
+
+    public void addDescription(Description description) {
+        this.description = description;
     }
 }

@@ -1,20 +1,20 @@
-package media;
+package media.descriptors;
 
-public class Tag<String, Double> {
+public class Tag {
 
     private final String name;
     private final Double confidence;
 
-    Tag(String name, Double confidence) {
+    public Tag(String name, Double confidence) {
         this.name = name;
         this.confidence = confidence;
     }
 
-    String getName() {
+    public String getName() {
         return name;
     }
 
-    Double getConfidence() {
+    private Double getConfidence() {
         return confidence;
     }
 
@@ -33,5 +33,4 @@ public class Tag<String, Double> {
 
         return false;
     }
-
 }
