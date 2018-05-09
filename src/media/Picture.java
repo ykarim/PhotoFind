@@ -86,4 +86,8 @@ public class Picture extends MediaFile {
     public void addDescription(Description description) {
         this.description = description;
     }
+
+    public void deleteDescription() {
+        description = new Description(null, null);
+    }
 }
