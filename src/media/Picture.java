@@ -78,7 +78,6 @@ public class Picture extends MediaFile {
         }
     }
 
-    //Update or add?
     public void addTags(ArrayList<Tag> tags) {
         this.tags = tags;
     }
@@ -88,6 +87,6 @@ public class Picture extends MediaFile {
     }
 
     public void deleteDescription() {
-        description = new Description(null, null);
+        description = new Description(new ArrayList<>(), new ArrayList<>());
     }
 }
