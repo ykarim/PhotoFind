@@ -5,6 +5,11 @@ public class Tag {
     private final String name;
     private final Double confidence;
 
+    public Tag(String name) {
+        this.name = name;
+        this.confidence = Double.NaN;
+    }
+
     public Tag(String name, Double confidence) {
         this.name = name;
         this.confidence = confidence;
