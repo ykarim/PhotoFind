@@ -13,15 +13,22 @@ import java.net.URI;
 public class VisionPostRequest implements VisionRequest {
 
     private HttpPost httpPost;
+    private VisionFunction visionFunction;
 
     //URI may not be with parameters so maybe create own type - unconfirmed
-    public VisionPostRequest(URI uri) {
+    public VisionPostRequest(URI uri, VisionFunction visionFunction) {
         httpPost = new HttpPost(uri);
+        this.visionFunction = visionFunction;
     }
 
     @Override
     public HttpUriRequest getRequest() {
         return httpPost;
+    }
+
+    @Override
+    public VisionFunction getVisionFunction() {
+        return visionFunction;
     }
 
     @Override
@@ -37,5 +44,4 @@ public class VisionPostRequest implements VisionRequest {
                 .build();
         httpPost.setEntity(newReq);
     }
-
 }

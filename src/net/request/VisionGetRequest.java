@@ -8,14 +8,21 @@ import java.net.URI;
 public class VisionGetRequest implements VisionRequest {
 
     private HttpGet httpGet;
+    private VisionFunction visionFunction;
 
-    public VisionGetRequest(URI uri) {
+    public VisionGetRequest(URI uri, VisionFunction visionFunction) {
         httpGet = new HttpGet(uri);
+        this.visionFunction = visionFunction;
     }
 
     @Override
     public HttpUriRequest getRequest() {
         return httpGet;
+    }
+
+    @Override
+    public VisionFunction getVisionFunction() {
+        return visionFunction;
     }
 
     @Override

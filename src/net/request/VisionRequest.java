@@ -6,5 +6,7 @@ public interface VisionRequest {
 
     HttpUriRequest getRequest();
 
+    VisionFunction getVisionFunction();
+
     void setSubscriptionKey(String subscriptionKey);
 }
