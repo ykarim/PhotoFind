@@ -13,6 +13,7 @@ public class VisionURIBuilder extends URIBuilder {
         super(region, URIStrings.VISION_API, version);
     }
 
+    //mb use vision func instead of uri strings?
     public URI getAnalyzeImageURI(ParameterList parameters) {
         return this.createURI(URIStrings.ANALYZE, parameters);
     }

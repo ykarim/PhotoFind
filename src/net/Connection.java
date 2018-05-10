@@ -18,7 +18,7 @@ public class Connection {
     }
 
     /**
-     * @param request Get/Post request to send to server
+     * @param request Get/Post request to send to server with image attached
      * @return change response type to program legible
      */
     public static VisionResponse sendRequest(VisionRequest request) {

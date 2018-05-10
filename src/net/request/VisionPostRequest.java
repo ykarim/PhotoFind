@@ -16,7 +16,7 @@ public class VisionPostRequest implements VisionRequest {
     private VisionFunction visionFunction;
 
     //URI may not be with parameters so maybe create own type - unconfirmed
-    public VisionPostRequest(URI uri, VisionFunction visionFunction) {
+    VisionPostRequest(URI uri, VisionFunction visionFunction) {
         httpPost = new HttpPost(uri);
         this.visionFunction = visionFunction;
     }
@@ -31,12 +31,13 @@ public class VisionPostRequest implements VisionRequest {
         return visionFunction;
     }
 
+    //Why constantly set sub key shouldn't just get from somewhere
     @Override
     public void setSubscriptionKey(String subscriptionKey) {
         httpPost.setHeader(RequestStrings.SUBSCRIPTION_HEADER, subscriptionKey);
     }
 
-    public void attachImage(Picture picture) {
+    void attachImage(Picture picture) {
         HttpEntity newReq = MultipartEntityBuilder
                 .create()
                 .addBinaryBody(RequestStrings.FILE_MULTIPART_NAME, picture.getFile(),
