@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ui.dashboard.HomeDashboardController;
 
 import java.io.IOException;
 
@@ -17,7 +18,7 @@ public class PhotoFind extends Application {
     @Override
     public void start(Stage stage) {
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("../../res/fxml/dashboard/Dashboard.fxml"));
+        loader.setLocation(getClass().getResource("../../res/fxml/dashboard/home.fxml"));
 
         Parent root = null;
         try {
@@ -26,11 +27,12 @@ public class PhotoFind extends Application {
             e.printStackTrace();
         }
 
-        Scene scene = new Scene(root, 600, 400);
+        Scene scene = new Scene(root, 600, 480);
 
         stage.setTitle("PhotoFind");
         stage.setScene(scene);
         stage.show();
 
+        HomeDashboardController homeDashboardController = loader.getController();
     }
 }
