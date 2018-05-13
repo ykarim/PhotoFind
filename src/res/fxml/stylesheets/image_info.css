@@ -1,0 +1,10 @@
+.image {
+    /*-fx-background-image: url("../img/logo.png");*/
+    -fx-background-size: cover;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center center;
+}
+
+.imageHeader {
+    -fx-background-color: WHITE;
+}
