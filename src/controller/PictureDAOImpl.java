@@ -19,7 +19,7 @@ public class PictureDAOImpl implements PictureDAO {
     }
 
     @Override
-    public Picture getPicture(Long id) {
+    public Picture getPictureById(String id) {
         for (Picture picture : pictures) {
             if (picture.getId().equals(id)) {
                 return picture;
@@ -29,7 +29,7 @@ public class PictureDAOImpl implements PictureDAO {
     }
 
     @Override
-    public Picture getPicture(String name) {
+    public Picture getPictureByName(String name) {
         for (Picture picture : pictures) {
             if (picture.getName().equals(name)) {
                 return picture;

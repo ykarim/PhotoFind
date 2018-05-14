@@ -8,9 +8,9 @@ public interface PictureDAO {
 
     List<Picture> getAllPictures();
 
-    Picture getPicture(Long id);
+    Picture getPictureById(String id);
 
-    Picture getPicture(String name);
+    Picture getPictureByName(String name);
 
     Picture addPicture(Picture picture);
 

@@ -5,11 +5,12 @@ import media.descriptors.Tag;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Picture extends MediaFile {
 
     //Pic ID
-    private final Long id;
+    private final String id;
     //Title of picture
     private String name;
     //List of Tags associated with picture
@@ -17,20 +18,28 @@ public class Picture extends MediaFile {
     //Description of picture
     private Description description;
 
-    Picture(File file, Long id, String name) {
+    Picture(File file) {
+        super(file);
+
+        //AutoGenerate
+        this.id = UUID.randomUUID().toString();
+        this.name = file.getName();
+    }
+
+    Picture(File file, String id, String name) {
         super(file);
         this.id = id;
         this.name = name;
     }
 
-    Picture(File file, Long id, String name, ArrayList<Tag> tags) {
+    Picture(File file, String id, String name, ArrayList<Tag> tags) {
         super(file);
         this.id = id;
         this.name = name;
         this.tags = tags;
     }
 
-    Picture(File file, Long id, String name, ArrayList<Tag> tags, Description description) {
+    Picture(File file, String id, String name, ArrayList<Tag> tags, Description description) {
         super(file);
         this.id = id;
         this.name = name;
@@ -38,7 +47,7 @@ public class Picture extends MediaFile {
         this.description = description;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
