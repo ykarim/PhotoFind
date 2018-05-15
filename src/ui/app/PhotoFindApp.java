@@ -9,7 +9,7 @@ import ui.dashboard.HomeDashboardController;
 
 import java.io.IOException;
 
-public class PhotoFind extends Application {
+public class PhotoFindApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
@@ -27,12 +27,13 @@ public class PhotoFind extends Application {
             e.printStackTrace();
         }
 
+        HomeDashboardController homeDashboardController = loader.getController();
+        homeDashboardController.initialize();
+
         Scene scene = new Scene(root, 600, 480);
 
         stage.setTitle("PhotoFind");
         stage.setScene(scene);
         stage.show();
-
-        HomeDashboardController homeDashboardController = loader.getController();
     }
 }
