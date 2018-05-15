@@ -55,7 +55,6 @@ public class HomeDashboardController {
     @FXML
     protected void handleUploadButtonAction(ActionEvent event) {
         Window owner = button_upload.getScene().getWindow();
-        initialize();
     }
 
     public Button getButton_upload() {
