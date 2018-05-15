@@ -1,17 +1,27 @@
 package ui.dashboard;
 
+import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import javafx.stage.Window;
+import ui.search.SearchScene;
 
 import java.net.URL;
 
 public class HomeDashboardController {
+
+    @FXML
+    private JFXTextField textField_searchBar;
+
+    @FXML
+    private Button button_search;
 
     @FXML
     private Button button_upload;
@@ -48,13 +58,18 @@ public class HomeDashboardController {
     }
 
     @FXML
-    protected void handleIconSearchMouseClick(MouseEvent event) {
+    protected void handleSearchBarKeyTyped(KeyEvent event) {
+        openSearchScene(((Node) event.getTarget()).getScene().getWindow());
+    }
 
+    @FXML
+    protected void handleSearchButtonAction(ActionEvent event) {
+        openSearchScene(((Node) event.getTarget()).getScene().getWindow());
     }
 
     @FXML
     protected void handleUploadButtonAction(ActionEvent event) {
-        Window owner = button_upload.getScene().getWindow();
+
     }
 
     public Button getButton_upload() {
@@ -67,5 +82,10 @@ public class HomeDashboardController {
 
     public AnchorPane getAnchorPane_imageHolder() {
         return anchorPane_imageHolder;
+    }
+
+    private void openSearchScene(Window currentWindow) {
+        SearchScene scene = new SearchScene();
+        scene.start((Stage) currentWindow);
     }
 }

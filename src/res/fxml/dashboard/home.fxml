@@ -13,7 +13,7 @@
 <?import java.net.URL?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
             minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="600.0" styleClass="root"
-            xmlns="http://javafx.com/javafx/8.0.171" fx:controller="ui.dashboard.HomeDashboardController">
+            xmlns="http://javafx.com/javafx/8.0.121" fx:controller="ui.dashboard.HomeDashboardController">
     <stylesheets>
         <URL value="@../stylesheets/dark_theme.css"/>
     </stylesheets>
@@ -54,17 +54,22 @@
                 <Insets left="25.0" right="25.0"/>
             </padding>
             <children>
-                <JFXTextField fx:id="textfield_search" promptText="Search" HBox.hgrow="ALWAYS">
+                <JFXTextField fx:id="textField_searchBar" onKeyTyped="#handleSearchBarKeyTyped" promptText="Search"
+                              HBox.hgrow="ALWAYS">
                     <HBox.margin>
                         <Insets right="25.0"/>
                     </HBox.margin>
                 </JFXTextField>
-                <FontAwesomeIconView fx:id="icon_search" glyphName="SEARCH" onMouseClicked="#handleIconSearchMouseClick"
-                                     size="32.0" HBox.hgrow="ALWAYS">
-                    <cursor>
-                        <Cursor fx:constant="HAND"/>
-                    </cursor>
-                </FontAwesomeIconView>
+                <JFXButton fx:id="button_search" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY"
+                           mnemonicParsing="false" onAction="#handleSearchButtonAction">
+                    <graphic>
+                        <FontAwesomeIconView fx:id="icon_search" glyphName="SEARCH" size="32.0">
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                        </FontAwesomeIconView>
+                    </graphic>
+                </JFXButton>
             </children>
         </HBox>
         <HBox alignment="CENTER_RIGHT" layoutY="400.0" maxHeight="1.7976931348623157E308"
