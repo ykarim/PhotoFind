@@ -1,6 +1,7 @@
 package controller;
 
 import media.Picture;
+import media.descriptors.Tag;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +37,35 @@ public class PictureDAOImpl implements PictureDAO {
             }
         }
         return null;
+    }
+
+    public ArrayList<Picture> getPicturesByName(String name) {
+        ArrayList<Picture> results = new ArrayList<>();
+
+        for (Picture picture : pictures) {
+            if (picture.getName().equals(name)) {
+                results.add(picture);
+            }
+        }
+
+        return results;
+    }
+
+    public ArrayList<Picture> getPicturesByTagName(String tagName) {
+        ArrayList<Picture> results = new ArrayList<>();
+
+        for (Picture picture : pictures) {
+            for (Tag tag : picture.getTags()) {
+                if (tag.getName().equals(tagName)) {
+                    results.add(picture);
+
+                    //Break out of current inner loop to not repeat picture in results
+                    break;
+                }
+            }
+        }
+
+        return results;
     }
 
     @Override
