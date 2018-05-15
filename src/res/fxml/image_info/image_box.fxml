@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import java.net.URL?>
 <VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
       minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="150.0"
-      xmlns="http://javafx.com/javafx/8.0.171">
+      xmlns="http://javafx.com/javafx/8.0.121">
     <stylesheets>
         <URL value="@../stylesheets/image_info.css"/>
     </stylesheets>
@@ -47,10 +48,17 @@
                         </Label>
                     </children>
                 </VBox>
+                <FontAwesomeIconView glyphName="ELLIPSIS_V" size="2.5em" strokeType="OUTSIDE" strokeWidth="0.0"/>
             </children>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
             </padding>
         </HBox>
     </children>
+    <cursor>
+        <Cursor fx:constant="HAND"/>
+    </cursor>
+    <effect>
+        <DropShadow/>
+    </effect>
 </VBox>
