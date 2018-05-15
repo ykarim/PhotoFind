@@ -1,0 +1,13 @@
+* {
+    -fx-primary: #263238;
+    -fx-primary-text: #ECEFF1;
+}
+
+.root {
+    -fx-background-color: #263238;
+}
+
+.text-field {
+    -fx-text-fill: -fx-primary-text;
+    -fx-prompt-text-fill: -fx-primary-text;
+}
