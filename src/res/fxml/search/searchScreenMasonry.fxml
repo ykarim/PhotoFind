@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXMasonryPane?>
 <?import com.jfoenix.controls.JFXSpinner?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.Cursor?>
 <?import javafx.scene.layout.*?>
 <?import java.net.URL?>
@@ -41,45 +41,24 @@
             </padding>
         </HBox>
         <StackPane layoutY="55.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                   prefHeight="425.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="55.0">
+                   minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="600.0"
+                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                   AnchorPane.topAnchor="55.0">
             <children>
+                <JFXMasonryPane fx:id="masonryPane_searchResults" HSpacing="50.0" VSpacing="20.0" cellHeight="250.0"
+                                cellWidth="150.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="600.0"
+                                StackPane.alignment="CENTER">
+                    <StackPane.margin>
+                        <Insets bottom="15.0" left="25.0" right="25.0" top="15.0"/>
+                    </StackPane.margin>
+                </JFXMasonryPane>
                 <JFXSpinner fx:id="spinner_resultSpinner" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0"
                             prefWidth="200.0" visible="false" StackPane.alignment="CENTER">
                     <StackPane.margin>
                         <Insets bottom="10.0" left="25.0" right="25.0" top="10.0"/>
                     </StackPane.margin>
                 </JFXSpinner>
-                <VBox alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                      prefHeight="425.0" prefWidth="600.0" StackPane.alignment="CENTER">
-                    <children>
-                        <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308"
-                                    maxWidth="1.7976931348623157E308" prefHeight="425.0" prefWidth="600.0"
-                                    VBox.vgrow="ALWAYS">
-                            <content>
-                                <GridPane fx:id="gridPane" alignment="CENTER" hgap="50.0"
-                                          maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                                          prefHeight="425.0" prefWidth="600.0" vgap="20.0">
-                                    <columnConstraints>
-                                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS"
-                                                           maxWidth="1.7976931348623157E308" percentWidth="33.0"/>
-                                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS"
-                                                           maxWidth="1.7976931348623157E308" percentWidth="33.0"/>
-                                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS"
-                                                           maxWidth="1.7976931348623157E308"/>
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints maxHeight="-Infinity" prefHeight="200.0" valignment="CENTER"
-                                                        vgrow="ALWAYS"/>
-                                    </rowConstraints>
-                                    <padding>
-                                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-                                    </padding>
-                                </GridPane>
-                            </content>
-                        </ScrollPane>
-                    </children>
-                </VBox>
             </children>
         </StackPane>
     </children>
