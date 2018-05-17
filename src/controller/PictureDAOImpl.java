@@ -8,13 +8,10 @@ import java.util.List;
 
 public class PictureDAOImpl implements PictureDAO {
 
-    List<Picture> pictures;
-
-    public PictureDAOImpl() {
-        pictures = new ArrayList<Picture>();
-    }
+    static List<Picture> pictures = new ArrayList<>();
 
     @Override
+    //static or nah
     public List<Picture> getAllPictures() {
         return pictures;
     }
@@ -43,7 +40,7 @@ public class PictureDAOImpl implements PictureDAO {
         ArrayList<Picture> results = new ArrayList<>();
 
         for (Picture picture : pictures) {
-            if (picture.getName().equals(name)) {
+            if (picture.getName().equalsIgnoreCase(name)) {
                 results.add(picture);
             }
         }
@@ -55,12 +52,13 @@ public class PictureDAOImpl implements PictureDAO {
         ArrayList<Picture> results = new ArrayList<>();
 
         for (Picture picture : pictures) {
+            inner:
             for (Tag tag : picture.getTags()) {
-                if (tag.getName().equals(tagName)) {
+                if (tag.getName().equalsIgnoreCase(tagName)) {
                     results.add(picture);
 
                     //Break out of current inner loop to not repeat picture in results
-                    break;
+                    break inner;
                 }
             }
         }
