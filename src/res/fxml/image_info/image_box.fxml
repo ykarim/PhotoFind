@@ -4,30 +4,30 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
 <?import java.net.URL?>
-<VBox xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-      minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="150.0"
-      xmlns="http://javafx.com/javafx/8.0.121">
+<fx:root xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+         minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="150.0" type="javafx.scene.layout.VBox"
+         xmlns="http://javafx.com/javafx/8.0.121">
     <stylesheets>
         <URL value="@../stylesheets/image_info.css"/>
     </stylesheets>
     <children>
-        <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="150.0"
-                    prefWidth="200.0" styleClass="image" VBox.vgrow="ALWAYS">
+        <AnchorPane fx:id="anchorPane_imageHolder" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                    prefHeight="150.0" prefWidth="200.0" styleClass="image" VBox.vgrow="ALWAYS">
             <children>
                 <ImageView fx:id="imageview_image" fitHeight="150.0" fitWidth="150.0" pickOnBounds="true"
                            AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                            AnchorPane.topAnchor="0.0"/>
             </children>
         </AnchorPane>
-        <HBox alignment="CENTER_LEFT" fillHeight="false" maxHeight="100.0" maxWidth="300.0" minHeight="-Infinity"
-              minWidth="-Infinity" prefHeight="50.0" prefWidth="150.0" VBox.vgrow="ALWAYS">
+        <HBox fx:id="hBox_imageHeader" alignment="CENTER_LEFT" fillHeight="false" maxHeight="100.0" maxWidth="300.0"
+              minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="150.0" styleClass="imageHeader"
+              VBox.vgrow="ALWAYS">
             <children>
-                <FontAwesomeIconView fill="#dd1515" glyphName="FILE_IMAGE_ALT" size="2.5em" HBox.hgrow="ALWAYS"/>
+                <FontAwesomeIconView fill="#dd1515" glyphName="FILE_IMAGE_ALT" size="30.0" HBox.hgrow="ALWAYS"/>
                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="50.0"
                       prefWidth="100.0" HBox.hgrow="ALWAYS">
                     <HBox.margin>
@@ -48,7 +48,7 @@
                         </Label>
                     </children>
                 </VBox>
-                <FontAwesomeIconView glyphName="ELLIPSIS_V" size="2.5em" strokeType="OUTSIDE" strokeWidth="0.0"/>
+                <FontAwesomeIconView glyphName="ELLIPSIS_V" size="30.0" strokeType="OUTSIDE" strokeWidth="0.0"/>
             </children>
             <padding>
                 <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
@@ -58,7 +58,4 @@
     <cursor>
         <Cursor fx:constant="HAND"/>
     </cursor>
-    <effect>
-        <DropShadow/>
-    </effect>
-</VBox>
+</fx:root>
