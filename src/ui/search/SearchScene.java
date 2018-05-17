@@ -4,13 +4,20 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import ui.util.Bundle;
 
 import java.io.IOException;
 
 public class SearchScene {
 
+    private Bundle<String> keyInputData;
+
     public SearchScene() {
 
+    }
+
+    public SearchScene(Bundle<String> keyInputData) {
+        this.keyInputData = keyInputData;
     }
 
     public void start(Stage stage) {
@@ -27,7 +34,7 @@ public class SearchScene {
 
         if (root != null) {
             SearchController searchController = searchScreenLoader.getController();
-            searchController.initialize();
+            searchController.initialize(keyInputData);
 
             Scene scene = new Scene(root, 600, 480);
             stage.setScene(scene);

@@ -2,6 +2,7 @@ package ui.dashboard;
 
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -12,6 +13,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import ui.search.SearchScene;
+import ui.util.Bundle;
 
 import java.net.URL;
 
@@ -59,12 +61,12 @@ public class HomeDashboardController {
 
     @FXML
     protected void handleSearchBarKeyTyped(KeyEvent event) {
-        openSearchScene(((Node) event.getTarget()).getScene().getWindow());
+        openSearchScene(event);
     }
 
     @FXML
     protected void handleSearchButtonAction(ActionEvent event) {
-        openSearchScene(((Node) event.getTarget()).getScene().getWindow());
+        openSearchScene(event);
     }
 
     @FXML
@@ -84,8 +86,20 @@ public class HomeDashboardController {
         return anchorPane_imageHolder;
     }
 
-    private void openSearchScene(Window currentWindow) {
-        SearchScene scene = new SearchScene();
+    private void openSearchScene(Event event) {
+        Window currentWindow = ((Node) event.getTarget()).getScene().getWindow();
+        SearchScene scene;
+
+        if (event instanceof KeyEvent) {
+            KeyEvent keyEvent = ((KeyEvent) event);
+            String inputText = keyEvent.getCharacter();//mb try reading val of textfield //if copy paste
+
+            Bundle<String> keyInputData = new Bundle<>(inputText);
+            scene = new SearchScene(keyInputData);
+        } else {
+            scene = new SearchScene();
+        }
+
         scene.start((Stage) currentWindow);
     }
 }

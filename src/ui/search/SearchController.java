@@ -11,6 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import media.Picture;
 import ui.image_info.ImageBox;
+import ui.util.Bundle;
 
 import java.util.ArrayList;
 
@@ -33,8 +34,20 @@ public class SearchController {
 
     }
 
-    void initialize() {
+    void initialize(Bundle<String> inputKeyBundle) {
+        if (inputKeyBundle != null) {
+            String inputText = inputKeyBundle.getData();
 
+            //Set text later as it must come after initialization otherwise text will be highlighted upon scene creation
+            Platform.runLater(() -> {
+                textField_searchBar.setText(inputText);
+                textField_searchBar.positionCaret(inputText.length());
+
+                //Perform search action on given inputText
+                //Placed under runLater as otherwise searchBar won't have value
+                searchImagesByTag();
+            });
+        }
     }
 
     //Known issue where extra char is sometimes needed to start search
