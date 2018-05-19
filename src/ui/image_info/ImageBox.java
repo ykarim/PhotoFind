@@ -3,14 +3,15 @@ package ui.image_info;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import media.Picture;
+import util.FileImport;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 
 public class ImageBox extends VBox {
 
@@ -59,7 +60,7 @@ public class ImageBox extends VBox {
     }
 
     public void setPicture(Picture picture) {
-        imageview_image.setImage(new Image("file:" + picture.getFile().getPath()));
+        imageview_image.setImage(FileImport.importImage(picture));
 
         imageview_image.setPreserveRatio(false);
         imageview_image.setSmooth(true);
@@ -68,6 +69,8 @@ public class ImageBox extends VBox {
         imageview_image.fitWidthProperty().bind(hBox_imageHeader.widthProperty()); //hacky and why?
 
         label_filename.setText(picture.getFile().getName());
-        label_editdate.setText(Long.toString(picture.getFile().lastModified()));
+
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+        label_editdate.setText(sdf.format(picture.getFile().lastModified()));
     }
 }
