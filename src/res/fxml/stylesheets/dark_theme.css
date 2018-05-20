@@ -23,3 +23,11 @@
     -fx-border-radius: 60px;
     -fx-border-width: 4px;
 }
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
