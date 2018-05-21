@@ -18,7 +18,7 @@
               AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <JFXButton fx:id="button_backButton" alignment="CENTER" buttonType="RAISED"
-                           contentDisplay="GRAPHIC_ONLY" HBox.hgrow="ALWAYS">
+                           contentDisplay="GRAPHIC_ONLY" onAction="#handleBackButtonAction" HBox.hgrow="ALWAYS">
                     <graphic>
                         <FontAwesomeIconView glyphName="CHEVRON_LEFT" size="30.0"/>
                     </graphic>

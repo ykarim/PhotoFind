@@ -17,7 +17,7 @@ public class ImageDetailsScene {
         this.pictureBundle = pictureBundle;
     }
 
-    public void start(Stage stage) {
+    public void start(Scene previousScene, Stage stage) {
         FXMLLoader imageDetailsLoader = new FXMLLoader();
         imageDetailsLoader.setLocation(getClass().getResource("../../res/fxml/imageDetails/imageDetails.fxml"));
 
@@ -31,7 +31,7 @@ public class ImageDetailsScene {
 
         if (root != null) {
             ImageDetailsController imageDetailsController = imageDetailsLoader.getController();
-            imageDetailsController.initialize(pictureBundle);
+            imageDetailsController.initialize(previousScene, pictureBundle);
 
             Scene scene = new Scene(root, 600, 480);
             stage.setScene(scene);

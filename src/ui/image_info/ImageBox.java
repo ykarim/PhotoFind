@@ -4,6 +4,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -92,9 +93,10 @@ public class ImageBox extends VBox {
     }
 
     private void openImageDetailsScene(Event event) {
-        Window currentWindow = ((Node) event.getTarget()).getScene().getWindow();
+        Scene currentScene = ((Node) event.getTarget()).getScene();
+        Window currentWindow = currentScene.getWindow();
         Bundle<Picture> pictureBundle = new Bundle<>(picture);
         ImageDetailsScene imageDetailsScene = new ImageDetailsScene(pictureBundle);
-        imageDetailsScene.start((Stage) currentWindow);
+        imageDetailsScene.start(currentScene, (Stage) currentWindow);
     }
 }

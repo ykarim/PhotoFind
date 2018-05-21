@@ -1,10 +1,14 @@
 package ui.imageDetails;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import media.Picture;
 import media.descriptors.Caption;
 import media.descriptors.Tag;
@@ -36,7 +40,11 @@ public class ImageDetailsController {
     @FXML
     private Label label_captionsLabel;
 
-    void initialize(Bundle<Picture> pictureBundle) {
+    private Scene previousScene;
+
+    void initialize(Scene previousScene, Bundle<Picture> pictureBundle) {
+        this.previousScene = previousScene;
+
         //Set sizing of imageView to fill anchorPane
         imageView_image.fitHeightProperty().bind(anchorPane_imageHolder.heightProperty());
         imageView_image.fitWidthProperty().bind(anchorPane_imageHolder.widthProperty());
@@ -46,6 +54,13 @@ public class ImageDetailsController {
         label_nameLabel.setText(pictureBundle.getData().getName());
         label_tagsLabel.setText(generateTagString(pictureBundle.getData().getTags()));
         label_captionsLabel.setText(generateCaptionsString(pictureBundle.getData().getDescription().getCaptions()));
+    }
+
+    @FXML
+    protected void handleBackButtonAction(ActionEvent event) {
+        Stage currentStage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+        currentStage.setScene(previousScene);
+        currentStage.show();
     }
 
     private String generateTagString(ArrayList<Tag> tags) {
@@ -75,5 +90,4 @@ public class ImageDetailsController {
         captionsString.delete(captionsString.lastIndexOf(", "), captionsString.length() - 1);
         return captionsString.toString();
     }
-
 }
