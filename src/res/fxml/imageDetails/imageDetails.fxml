@@ -51,14 +51,17 @@
                             prefWidth="275.0" HBox.hgrow="ALWAYS">
                     <children>
                         <ImageView fx:id="imageView_image" fitHeight="350.0" fitWidth="275.0" pickOnBounds="true"
-                                   preserveRatio="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                                    AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
                     </children>
+                    <HBox.margin>
+                        <Insets right="25.0"/>
+                    </HBox.margin>
                 </AnchorPane>
                 <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308"
                             maxWidth="1.7976931348623157E308" prefHeight="350.0" prefWidth="275.0" HBox.hgrow="ALWAYS">
                     <content>
-                        <GridPane prefHeight="350.0" prefWidth="275.0" vgap="20.0">
+                        <GridPane hgap="20.0" prefHeight="350.0" prefWidth="275.0" vgap="20.0">
                             <columnConstraints>
                                 <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity"/>
                                 <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/>
