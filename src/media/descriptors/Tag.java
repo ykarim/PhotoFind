@@ -19,7 +19,7 @@ public class Tag {
         return name;
     }
 
-    private Double getConfidence() {
+    public Double getConfidence() {
         return confidence;
     }
 

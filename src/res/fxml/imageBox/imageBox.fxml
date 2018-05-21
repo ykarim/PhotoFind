@@ -10,8 +10,8 @@
 <?import javafx.scene.text.Font?>
 <?import java.net.URL?>
 <fx:root xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-         minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="150.0" type="javafx.scene.layout.VBox"
-         xmlns="http://javafx.com/javafx/8.0.121">
+         minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleActionEvent" prefHeight="200.0"
+         prefWidth="150.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8.0.121">
     <stylesheets>
         <URL value="@../stylesheets/image_info.css"/>
     </stylesheets>

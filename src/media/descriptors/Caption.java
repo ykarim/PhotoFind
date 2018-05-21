@@ -10,11 +10,11 @@ public class Caption {
         this.confidence = confidence;
     }
 
-    private String getText() {
+    public String getText() {
         return text;
     }
 
-    private Double getConfidence() {
+    public Double getConfidence() {
         return confidence;
     }
 
