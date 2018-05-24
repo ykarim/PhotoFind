@@ -5,17 +5,22 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import ui.addImage.AddImageScene;
 import ui.search.SearchScene;
 import ui.util.Bundle;
 
+import java.io.File;
 import java.net.URL;
+import java.util.List;
 
 public class HomeDashboardController {
 
@@ -71,7 +76,23 @@ public class HomeDashboardController {
 
     @FXML
     protected void handleUploadButtonAction(ActionEvent event) {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Picture File");
 
+        //Chosen using Cognitive Services accepted file formats
+        FileChooser.ExtensionFilter pictureExtensionFilter =
+                new FileChooser.ExtensionFilter("Image",
+                        "*.png",
+                        "*.jpg",
+                        "*.jpeg",
+                        "*.gif",
+                        "*.bmp");
+        fileChooser.getExtensionFilters().add(pictureExtensionFilter);
+        List<File> files = fileChooser.showOpenMultipleDialog(((Node) event.getTarget()).getScene().getWindow());
+
+        if (files != null && files.size() > 0) {
+            openAddImageScene(event, files);
+        }
     }
 
     public Button getButton_upload() {
@@ -101,5 +122,13 @@ public class HomeDashboardController {
         }
 
         scene.start((Stage) currentWindow);
+    }
+
+    private void openAddImageScene(Event event, List<File> files) {
+        Scene currentScene = ((Node) event.getTarget()).getScene();
+        Window currentWindow = currentScene.getWindow();
+        AddImageScene addImageScene = new AddImageScene(new Bundle<>(files));
+
+        addImageScene.start(currentScene, (Stage) currentWindow);
     }
 }

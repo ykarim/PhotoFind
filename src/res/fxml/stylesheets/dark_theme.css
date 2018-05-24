@@ -31,3 +31,39 @@
 .scroll-pane {
     -fx-background-color: transparent;
 }
+
+.colored-button {
+    -fx-background-color: #37474F;
+    -fx-text-fill: #FFFFFF;
+}
+
+.jfx-dialog-overlay-pane {
+    -fx-background-color: rgba(0.0, 0.0, 0.0, 0.1);
+}
+
+.dialog-trigger {
+    -fx-background-color: WHITE;
+    -jfx-button-type: RAISED;
+    -fx-font-size: 14.0px;
+}
+
+.jfx-layout-heading .label {
+    -fx-font-size: 20.0px;
+    -fx-text-fill: #FFFFFF;
+}
+
+.jfx-layout-body {
+    -fx-padding: 15px;
+}
+
+.dialog-accept {
+    -fx-text-fill: #03A9F4;
+    -fx-font-weight: BOLD;
+    -fx-padding: 0.7em 0.8em;
+}
+
+.dialog-reject {
+    -fx-text-fill: #B71C1C;
+    -fx-font-weight: BOLD;
+    -fx-padding: 0.7em 0.8em;
+}
