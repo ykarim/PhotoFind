@@ -14,8 +14,16 @@ public class Caption {
         return text;
     }
 
+    public void setText(String text) {
+        this.text = text;
+    }
+
     public Double getConfidence() {
         return confidence;
+    }
+
+    public void setConfidence(Double confidence) {
+        this.confidence = confidence;
     }
 
     @Override

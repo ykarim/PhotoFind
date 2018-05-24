@@ -16,9 +16,9 @@ public class Picture extends MediaFile {
     //List of Tags associated with picture
     private ArrayList<Tag> tags = new ArrayList<>();
     //Description of picture
-    private Description description;
+    private Description description = new Description(new ArrayList<>(), new ArrayList<>());
 
-    Picture(File file) {
+    public Picture(File file) {
         super(file);
 
         //AutoGenerate
@@ -87,7 +87,7 @@ public class Picture extends MediaFile {
         }
     }
 
-    public void addTags(ArrayList<Tag> tags) {
+    public void setTags(ArrayList<Tag> tags) {
         this.tags = tags;
     }
 

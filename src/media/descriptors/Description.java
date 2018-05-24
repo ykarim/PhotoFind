@@ -16,6 +16,10 @@ public class Description {
         return captions;
     }
 
+    public void setCaptions(ArrayList<Caption> captions) {
+        this.captions = captions;
+    }
+
     public ArrayList<Tag> getTags() {
         return tags;
     }
