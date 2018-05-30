@@ -55,7 +55,7 @@ public class URIBuilder {
     private void setParameters(ParameterList parameterList) {
         if (parameterList != null) {
             for (Parameter parameter : parameterList.getParameters()) {
-                uriBuilder.setParameters(parameter);
+                uriBuilder.addParameter(parameter.getName(), parameter.getValue());
             }
         }
     }
