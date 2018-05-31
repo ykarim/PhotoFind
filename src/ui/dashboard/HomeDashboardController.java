@@ -1,6 +1,7 @@
 package ui.dashboard;
 
 import com.jfoenix.controls.JFXTextField;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -59,6 +60,9 @@ public class HomeDashboardController {
         getImageview_image().fitHeightProperty().bind(getAnchorPane_imageHolder().heightProperty());
         getImageview_image().fitWidthProperty().bind(getAnchorPane_imageHolder().widthProperty());
 
+        //Prevent entry into searchBar as all input will be relayed to SearchScene
+        textField_searchBar.textProperty().bind(new SimpleStringProperty());
+
         vBox_imageBoxOne.setVisible(false);
         vBox_imageBoxTwo.setVisible(false);
         vBox_imageBoxThree.setVisible(false);
@@ -108,7 +112,8 @@ public class HomeDashboardController {
     }
 
     private void openSearchScene(Event event) {
-        Window currentWindow = ((Node) event.getTarget()).getScene().getWindow();
+        Scene currentScene = ((Node) event.getTarget()).getScene();
+        Window currentWindow = currentScene.getWindow();
         SearchScene scene;
 
         if (event instanceof KeyEvent) {
@@ -121,7 +126,7 @@ public class HomeDashboardController {
             scene = new SearchScene();
         }
 
-        scene.start((Stage) currentWindow);
+        scene.start(currentScene, (Stage) currentWindow);
     }
 
     private void openAddImageScene(Event event, List<File> files) {

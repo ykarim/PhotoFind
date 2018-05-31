@@ -7,8 +7,11 @@ import controller.PictureDAOImpl;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 import media.Picture;
 import ui.image_info.ImageBox;
 import ui.util.Bundle;
@@ -28,18 +31,23 @@ public class SearchController {
     @FXML
     protected JFXSpinner spinner_resultSpinner;
 
+    private Scene previousScene;
+
     private PictureDAOImpl pictureDAO = new PictureDAOImpl();
 
     public SearchController() {
 
     }
 
-    void initialize(Bundle<String> inputKeyBundle) {
+    void initialize(Scene previousScene, Bundle<String> inputKeyBundle) {
+        this.previousScene = previousScene;
+
         if (inputKeyBundle != null) {
             String inputText = inputKeyBundle.getData();
 
             //Set text later as it must come after initialization otherwise text will be highlighted upon scene creation
             Platform.runLater(() -> {
+                textField_searchBar.requestFocus();
                 textField_searchBar.setText(inputText);
                 textField_searchBar.positionCaret(inputText.length());
 
@@ -59,6 +67,13 @@ public class SearchController {
     @FXML
     protected void handleSearchButtonAction(ActionEvent event) {
         searchImagesByTag();
+    }
+
+    @FXML
+    protected void handleBackButtonAction(ActionEvent event) {
+        Stage currentStage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+        currentStage.setScene(previousScene);
+        currentStage.show();
     }
 
     //known issue with lag after typing last character "y" where lastchar wouldnt show up till search complete

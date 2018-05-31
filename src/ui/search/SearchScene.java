@@ -20,9 +20,9 @@ public class SearchScene {
         this.keyInputData = keyInputData;
     }
 
-    public void start(Stage stage) {
+    public void start(Scene previousScene, Stage stage) {
         FXMLLoader searchScreenLoader = new FXMLLoader();
-        searchScreenLoader.setLocation(getClass().getResource("../../res/fxml/search/searchScreen.fxml"));
+        searchScreenLoader.setLocation(getClass().getResource("../../res/fxml/search/search.fxml"));
 
         Parent root = null;
 
@@ -34,7 +34,7 @@ public class SearchScene {
 
         if (root != null) {
             SearchController searchController = searchScreenLoader.getController();
-            searchController.initialize(keyInputData);
+            searchController.initialize(previousScene, keyInputData);
 
             Scene scene = new Scene(root, 600, 480);
             stage.setScene(scene);

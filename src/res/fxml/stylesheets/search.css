@@ -1,15 +1,14 @@
 * {
     -fx-primary: #263238;
-    -fx-primary-text: #ECEFF1;
+    -fx-primary-text: #000000;
 }
 
 .root {
-    -fx-background-color: #263238;
+    -fx-background-color: #b0bec5;
 }
 
-.text-field {
-    -fx-text-fill: -fx-primary-text;
-    -fx-prompt-text-fill: -fx-primary-text;
+.title {
+    -fx-background-color: #607d8b;
 }
 
 .scroll-pane > .viewport {
