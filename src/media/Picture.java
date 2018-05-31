@@ -91,7 +91,7 @@ public class Picture extends MediaFile {
         this.tags = tags;
     }
 
-    public void addDescription(Description description) {
+    public void setDescription(Description description) {
         this.description = description;
     }
 
