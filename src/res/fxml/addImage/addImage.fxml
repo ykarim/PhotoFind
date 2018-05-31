@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import com.jfoenix.controls.*?>
 <?import de.jensd.fx.glyphs.fontawesome.*?>
 <?import javafx.geometry.Insets?>
@@ -14,8 +13,8 @@
            prefWidth="600.0" stylesheets="@../stylesheets/dark_theme.css" xmlns="http://javafx.com/javafx/8.0.121"
            fx:controller="ui.addImage.AddImageController">
     <children>
-        <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="80.0"
-                    prefHeight="480.0" prefWidth="600.0">
+        <AnchorPane fx:id="anchorPane_content" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                    minHeight="80.0" prefHeight="480.0" prefWidth="600.0">
             <children>
                 <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
                       prefHeight="80.0" prefWidth="600.0" styleClass="title" AnchorPane.leftAnchor="0.0"
@@ -210,5 +209,7 @@
                 </JFXButton>
             </children>
         </AnchorPane>
+        <JFXSpinner fx:id="spinner_status" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0"
+                    prefWidth="200.0" progress="0.0" visible="false"/>
     </children>
 </StackPane>

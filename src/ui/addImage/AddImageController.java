@@ -6,16 +6,18 @@ import com.jfoenix.controls.cells.editors.TextFieldEditorBuilder;
 import com.jfoenix.controls.cells.editors.base.GenericEditableTreeTableCell;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import controller.PictureDAOImpl;
+import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
@@ -27,6 +29,7 @@ import javafx.stage.Stage;
 import media.Picture;
 import media.descriptors.Caption;
 import media.descriptors.Tag;
+import process.VisionAnalysisProcess;
 import ui.model.UICaption;
 import ui.model.UITag;
 import ui.util.Bundle;
@@ -40,6 +43,12 @@ public class AddImageController {
 
     @FXML
     private StackPane stackPane_content;
+
+    @FXML
+    private AnchorPane anchorPane_content;
+
+    @FXML
+    private JFXSpinner spinner_status;
 
     @FXML
     private Label label_title;
@@ -100,6 +109,8 @@ public class AddImageController {
 
     private SimpleIntegerProperty currentPictureIndex = new SimpleIntegerProperty(0);
 
+    private VisionAnalysisProcess visionAnalysisProcess;
+
     public AddImageController() {
 
     }
@@ -126,7 +137,7 @@ public class AddImageController {
 
     @FXML
     protected void handleBackButtonAction(ActionEvent event) {
-        returnToHomeDashboard(event);
+        returnToHomeDashboard();
     }
 
     @FXML
@@ -191,7 +202,7 @@ public class AddImageController {
             //If current index is out of bounds of pictures list, check if no pictures remain
             if (currentPictureIndex.get() == 0) {
                 //If no pictures remain, return to homeDashboard
-                returnToHomeDashboard(event);
+                returnToHomeDashboard();
             } else {
                 //If pictures still remain, subtract 1 from index and refresh page
                 currentPictureIndex.set(currentPictureIndex.get() - 1);
@@ -223,13 +234,9 @@ public class AddImageController {
         yesButton.setOnAction(yesButtonEvent -> {
             //Current picture hasn't been saved yet so save
             savePicture();
-
-            for (Picture picture : pictures) {
-                pictureDAO.addPicture(picture);
-            }
-
             confirmationDialog.close();
-            returnToHomeDashboard(yesButtonEvent);
+
+            startPictureAnalysis(yesButtonEvent);
         });
 
         noButton.setOnAction(noButtonEvent -> confirmationDialog.close());
@@ -379,8 +386,42 @@ public class AddImageController {
         setupCaptionsTableView();
     }
 
-    private void returnToHomeDashboard(Event event) {
-        Stage currentStage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
+    private void startPictureAnalysis(Event buttonEvent) {
+        visionAnalysisProcess = new VisionAnalysisProcess(pictures);
+        spinner_status.progressProperty().bind(visionAnalysisProcess.progressProperty());
+
+        Platform.runLater(() -> {
+            anchorPane_content.setOpacity(0.75);
+            spinner_status.setVisible(true);
+        });
+
+        final Thread analyzePicturesThread = new Thread(visionAnalysisProcess);
+        analyzePicturesThread.setDaemon(true);
+        analyzePicturesThread.start();
+
+        visionAnalysisProcess.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+            @Override
+            public void handle(WorkerStateEvent event) {
+                pictures = visionAnalysisProcess.getValue();
+                saveAllPictures();
+
+                Platform.runLater(() -> {
+                    spinner_status.setVisible(false);
+                });
+
+                returnToHomeDashboard();
+            }
+        });
+    }
+
+    private void saveAllPictures() {
+        for (Picture picture : pictures) {
+            pictureDAO.addPicture(picture);
+        }
+    }
+
+    private void returnToHomeDashboard() {
+        Stage currentStage = (Stage) stackPane_content.getScene().getWindow();
         currentStage.setScene(previousScene);
         currentStage.show();
     }
