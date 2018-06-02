@@ -24,6 +24,7 @@ import javafx.stage.Window;
 import javafx.util.Duration;
 import ui.addImage.AddImageScene;
 import ui.search.SearchScene;
+import ui.settings.SettingsScene;
 import ui.util.Bundle;
 
 import java.io.File;
@@ -144,6 +145,11 @@ public class HomeDashboardController {
     }
 
     @FXML
+    protected void handleMenuSettingsAction(ActionEvent event) {
+        openSettingsScene(event);
+    }
+
+    @FXML
     protected void handleSearchBarKeyTyped(KeyEvent event) {
         openSearchScene(event);
     }
@@ -210,5 +216,13 @@ public class HomeDashboardController {
         AddImageScene addImageScene = new AddImageScene(new Bundle<>(files));
 
         addImageScene.start(currentScene, (Stage) currentWindow);
+    }
+
+    private void openSettingsScene(Event event) {
+        Scene currentScene = ((Node) event.getTarget()).getScene();
+        Window currentWindow = currentScene.getWindow();
+        SettingsScene settingsScene = new SettingsScene();
+
+        settingsScene.start(currentScene, (Stage) currentWindow);
     }
 }

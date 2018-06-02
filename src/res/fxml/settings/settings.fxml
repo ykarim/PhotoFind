@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.validation.RequiredFieldValidator?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import java.net.URL?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+            minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="600.0" styleClass="root"
+            xmlns="http://javafx.com/javafx/8.0.121" fx:controller="ui.settings.SettingsController">
+    <stylesheets>
+        <URL value="@../stylesheets/dark_theme.css"/>
+    </stylesheets>
+    <children>
+        <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+              prefHeight="80.0" prefWidth="600.0" styleClass="title" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <HBox alignment="CENTER_LEFT" maxHeight="80.0" maxWidth="1.7976931348623157E308" prefHeight="80.0"
+                      HBox.hgrow="ALWAYS">
+                    <children>
+                        <JFXButton fx:id="button_backButton" alignment="CENTER" buttonType="RAISED"
+                                   contentDisplay="GRAPHIC_ONLY" onAction="#handleBackButtonAction" HBox.hgrow="ALWAYS">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="CHEVRON_LEFT" size="30.0"/>
+                            </graphic>
+                        </JFXButton>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER" maxHeight="80.0" maxWidth="1.7976931348623157E308" prefHeight="80.0"
+                      HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label fx:id="label_title" text="Settings" textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                            <font>
+                                <Font size="24.0"/>
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+                <HBox alignment="CENTER_RIGHT" maxHeight="80.0" maxWidth="1.7976931348623157E308" prefHeight="80.0"
+                      HBox.hgrow="ALWAYS"/>
+            </children>
+            <padding>
+                <Insets left="25.0" right="25.0"/>
+            </padding>
+            <effect>
+                <DropShadow/>
+            </effect>
+        </HBox>
+        <VBox alignment="TOP_CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+              prefHeight="400.0" prefWidth="600.0" spacing="25.0" AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">
+            <padding>
+                <Insets bottom="25.0" left="25.0" right="25.0" top="25.0"/>
+            </padding>
+            <children>
+                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="600.0">
+                    <children>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                               text="Microsoft Computer Vision API Key" HBox.hgrow="ALWAYS"/>
+                        <JFXTextField fx:id="textField_key" maxHeight="1.7976931348623157E308"
+                                      maxWidth="1.7976931348623157E308" promptText="Subscription Key"
+                                      HBox.hgrow="ALWAYS">
+                            <validators>
+                                <RequiredFieldValidator message="Subscription Key Required!">
+                                    <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>
+                                </RequiredFieldValidator>
+                            </validators>
+                        </JFXTextField>
+                    </children>
+                </HBox>
+                <JFXButton fx:id="button_submit" buttonType="RAISED" mnemonicParsing="false"
+                           onAction="#handleSubmitAction" styleClass="colored-button" text="Submit">
+                    <VBox.margin>
+                        <Insets top="25.0"/>
+                    </VBox.margin>
+                </JFXButton>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
