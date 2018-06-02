@@ -9,7 +9,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -28,7 +27,6 @@ import ui.search.SearchScene;
 import ui.util.Bundle;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
@@ -39,6 +37,9 @@ public class HomeDashboardController {
 
     @FXML
     private JFXHamburger hamburger;
+
+    @FXML
+    private VBox vBox_sidemenu;
 
     @FXML
     private HBox hBox_search;
@@ -76,29 +77,11 @@ public class HomeDashboardController {
     @FXML
     private URL location;
 
-    private VBox vBox_sidemenu;
-
     public HomeDashboardController() {
 
     }
 
     public void initialize() {
-        //Initialize Side Menu TODO: Add VBox sideMenu into home.fxml instead of loading and setting properties here
-        try {
-            vBox_sidemenu = FXMLLoader.load(getClass().getResource("../../res/fxml/sidemenu/sidemenu.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        //Set Side Menu Properties
-        vBox_sidemenu.setVisible(false);
-        vBox_sidemenu.setMinSize(200, 405);
-        vBox_sidemenu.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        AnchorPane.setBottomAnchor(vBox_sidemenu, (double) 0);
-        AnchorPane.setLeftAnchor(vBox_sidemenu, (double) 0);
-        AnchorPane.setTopAnchor(vBox_sidemenu, 75d);
-        anchorPane_content.getChildren().add(vBox_sidemenu);
-
         //Set Hamburger animation
         HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(hamburger);
         transition.setRate(-1);
@@ -131,7 +114,7 @@ public class HomeDashboardController {
 
             protected void interpolate(double frac) {
                 final double curWidth = startWidth * (1.0 - frac);
-                vBox_sidemenu.setPrefWidth(curWidth);
+                vBox_sidemenu.setMinWidth(curWidth);
                 vBox_sidemenu.setTranslateX(-startWidth + curWidth);
             }
         };
@@ -144,7 +127,7 @@ public class HomeDashboardController {
 
             protected void interpolate(double frac) {
                 final double curWidth = startWidth * frac;
-                vBox_sidemenu.setPrefWidth(curWidth);
+                vBox_sidemenu.setMinWidth(curWidth);
                 vBox_sidemenu.setTranslateX(-startWidth + curWidth);
             }
         };

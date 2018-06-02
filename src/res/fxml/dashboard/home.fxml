@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXHamburger?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.*?>
 <?import de.jensd.fx.glyphs.fontawesome.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -14,7 +12,7 @@
 <?import java.net.URL?>
 <AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="anchorPane_content" maxHeight="1.7976931348623157E308"
             maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0"
-            prefWidth="600.0" styleClass="root" xmlns="http://javafx.com/javafx/8.0.121"
+            prefWidth="600.0" styleClass="root" xmlns="http://javafx.com/javafx/8.0.171"
             fx:controller="ui.dashboard.HomeDashboardController">
     <stylesheets>
         <URL value="@../stylesheets/dark_theme.css"/>
@@ -285,6 +283,28 @@
                         </VBox>
                     </children>
                 </GridPane>
+            </children>
+        </VBox>
+        <VBox fx:id="vBox_sidemenu" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+              minHeight="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="200.0"
+              style="-fx-background-color: WHITE;" visible="false" AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="75.0">
+            <children>
+                <AnchorPane fx:id="anchorPane_imageHolder2" prefHeight="150.0" prefWidth="200.0">
+                    <children>
+                        <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true"
+                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                    </children>
+                </AnchorPane>
+                <JFXButton fx:id="button_home" buttonType="RAISED" maxHeight="1.7976931348623157E308"
+                           maxWidth="1.7976931348623157E308" minHeight="50.0" text="Home"/>
+                <JFXButton fx:id="button_search1" buttonType="RAISED" maxHeight="1.7976931348623157E308"
+                           maxWidth="1.7976931348623157E308" minHeight="50.0" text="Search"/>
+                <JFXButton fx:id="button_settings" buttonType="RAISED" maxHeight="1.7976931348623157E308"
+                           maxWidth="1.7976931348623157E308" minHeight="50.0" text="Settings"/>
+                <JFXButton fx:id="button_help" buttonType="RAISED" maxHeight="1.7976931348623157E308"
+                           maxWidth="1.7976931348623157E308" minHeight="50.0" text="Help"/>
             </children>
         </VBox>
     </children>
