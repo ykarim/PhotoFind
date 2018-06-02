@@ -33,7 +33,7 @@ public class PhotoFindApp extends Application {
                 captions.add(new Caption("Test", 1.0));
             }
 
-            picture.addDescription(new Description(captions, null));
+            picture.setDescription(new Description(captions, null));
             new PictureDAOImpl().addPicture(picture);
         }
 

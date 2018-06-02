@@ -1,29 +1,53 @@
 package ui.dashboard;
 
+import com.jfoenix.controls.JFXHamburger;
 import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.transitions.hamburger.HamburgerSlideCloseTransition;
+import javafx.animation.Animation;
+import javafx.animation.Transition;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.Duration;
 import ui.addImage.AddImageScene;
 import ui.search.SearchScene;
 import ui.util.Bundle;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 
 public class HomeDashboardController {
+
+    @FXML
+    private AnchorPane anchorPane_content;
+
+    @FXML
+    private JFXHamburger hamburger;
+
+    @FXML
+    private HBox hBox_search;
+
+    @FXML
+    private VBox vBox_images;
+
+    @FXML
+    private HBox hBox_upload;
 
     @FXML
     private JFXTextField textField_searchBar;
@@ -52,11 +76,34 @@ public class HomeDashboardController {
     @FXML
     private URL location;
 
+    private VBox vBox_sidemenu;
+
     public HomeDashboardController() {
 
     }
 
     public void initialize() {
+        //Initialize Side Menu TODO: Add VBox sideMenu into home.fxml instead of loading and setting properties here
+        try {
+            vBox_sidemenu = FXMLLoader.load(getClass().getResource("../../res/fxml/sidemenu/sidemenu.fxml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        //Set Side Menu Properties
+        vBox_sidemenu.setVisible(false);
+        vBox_sidemenu.setMinSize(200, 405);
+        vBox_sidemenu.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        AnchorPane.setBottomAnchor(vBox_sidemenu, (double) 0);
+        AnchorPane.setLeftAnchor(vBox_sidemenu, (double) 0);
+        AnchorPane.setTopAnchor(vBox_sidemenu, 75d);
+        anchorPane_content.getChildren().add(vBox_sidemenu);
+
+        //Set Hamburger animation
+        HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(hamburger);
+        transition.setRate(-1);
+        hamburger.setAnimation(transition);
+
         getImageview_image().fitHeightProperty().bind(getAnchorPane_imageHolder().heightProperty());
         getImageview_image().fitWidthProperty().bind(getAnchorPane_imageHolder().widthProperty());
 
@@ -66,6 +113,51 @@ public class HomeDashboardController {
         vBox_imageBoxOne.setVisible(false);
         vBox_imageBoxTwo.setVisible(false);
         vBox_imageBoxThree.setVisible(false);
+    }
+
+    @FXML
+    protected void handleHamburgerPress(MouseEvent event) {
+        //Invert and play hamburger animation
+        Transition transition = hamburger.getAnimation();
+        transition.setRate(transition.getRate() * -1);
+        transition.play();
+
+        //Play sideMenu animation depending on current visibility state
+        double startWidth = vBox_sidemenu.getWidth();
+        final Animation hideSidemenu = new Transition() {
+            {
+                setCycleDuration(Duration.millis(250));
+            }
+
+            protected void interpolate(double frac) {
+                final double curWidth = startWidth * (1.0 - frac);
+                vBox_sidemenu.setPrefWidth(curWidth);
+                vBox_sidemenu.setTranslateX(-startWidth + curWidth);
+            }
+        };
+        hideSidemenu.onFinishedProperty().set(actionEvent -> vBox_sidemenu.setVisible(false));
+
+        final Animation showSidemenu = new Transition() {
+            {
+                setCycleDuration(Duration.millis(250));
+            }
+
+            protected void interpolate(double frac) {
+                final double curWidth = startWidth * frac;
+                vBox_sidemenu.setPrefWidth(curWidth);
+                vBox_sidemenu.setTranslateX(-startWidth + curWidth);
+            }
+        };
+
+        //Known bug where multiple rapid clicks of hamburger mess up animations. Closed Hamburger is shown with menu visible
+        if (showSidemenu.statusProperty().get() == Animation.Status.STOPPED && hideSidemenu.statusProperty().get() == Animation.Status.STOPPED) {
+            if (vBox_sidemenu.isVisible()) {
+                hideSidemenu.play();
+            } else {
+                vBox_sidemenu.setVisible(true);
+                showSidemenu.play();
+            }
+        }
     }
 
     @FXML
