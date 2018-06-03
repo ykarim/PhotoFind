@@ -1,4 +1,4 @@
-package ui.addImage;
+package ui.addEditImage;
 
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.cells.editors.DoubleTextFieldEditorBuilder;
@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
@@ -26,10 +27,12 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import media.Picture;
 import media.descriptors.Caption;
 import media.descriptors.Tag;
 import process.VisionAnalysisProcess;
+import ui.imageDetails.ImageDetailsScene;
 import ui.model.UICaption;
 import ui.model.UITag;
 import ui.util.Bundle;
@@ -39,7 +42,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddImageController {
+public class AddEditImageController {
 
     @FXML
     private StackPane stackPane_content;
@@ -101,7 +104,9 @@ public class AddImageController {
     @FXML
     private JFXTreeTableColumn<UICaption, Double> tableColumn_captionConfidence;
 
+    private AddEditImageScene.Mode mode;
     private Scene previousScene;
+    private Scene secondPreviousScene;
     private PictureDAOImpl pictureDAO = new PictureDAOImpl();
     private ArrayList<Picture> pictures = new ArrayList<>();
     private ObservableList<UITag> currentPictureTags;
@@ -111,33 +116,48 @@ public class AddImageController {
 
     private VisionAnalysisProcess visionAnalysisProcess;
 
-    public AddImageController() {
+    public AddEditImageController() {
 
     }
 
-    void initialize(Scene previousScene, Bundle<List<File>> filesBundle) {
+    void initializeScene(AddEditImageScene.Mode mode, Scene previousScene, Bundle dataBundle) {
+        this.mode = mode;
         this.previousScene = previousScene;
+
         imageView_image.fitHeightProperty().bind(anchorPane_imageHolder.heightProperty());
         imageView_image.fitWidthProperty().bind(anchorPane_imageHolder.widthProperty());
 
-        for (File file : filesBundle.getData()) {
-            Picture newPicture = new Picture(file);
-            pictures.add(newPicture);
+        if (mode.equals(AddEditImageScene.Mode.ADD) && dataBundle.getData() instanceof List) {
+            Bundle<List<File>> filesBundle = (Bundle<List<File>>) dataBundle;
+            for (File file : filesBundle.getData()) {
+                Picture newPicture = new Picture(file);
+                pictures.add(newPicture);
+            }
+
+            imageView_image.setImage(FileImport.importImage(pictures.get(currentPictureIndex.get())));
+            textField_pictureName.setText(pictures.get(currentPictureIndex.get()).getName());
+
+            setAddTitleText();
+        } else if (mode.equals(AddEditImageScene.Mode.EDIT) && dataBundle.getData() instanceof List) {
+            Bundle<List> scenePictureBundle = (Bundle<List>) dataBundle;
+            this.secondPreviousScene = (Scene) scenePictureBundle.getData().get(0);
+            Picture picture = (Picture) scenePictureBundle.getData().get(1);
+            pictures.add(picture);
+
+            imageView_image.setImage(FileImport.importImage(picture));
+            textField_pictureName.setText(picture.getName());
+
+            setEditTitleText();
         }
 
-        imageView_image.setImage(FileImport.importImage(pictures.get(currentPictureIndex.get())));
-        textField_pictureName.setText(pictures.get(currentPictureIndex.get()).getName());
-
-        setTitleText();
         setupButtons();
-
         setupTagsTableView();
         setupCaptionsTableView();
     }
 
     @FXML
     protected void handleBackButtonAction(ActionEvent event) {
-        returnToHomeDashboard();
+        returnToPreviousScene();
     }
 
     @FXML
@@ -168,6 +188,8 @@ public class AddImageController {
     @FXML
     protected void handleRemoveTagAction(ActionEvent event) {
         currentPictureTags.remove(tableView_tags.getSelectionModel().selectedIndexProperty().get());
+        //Must clear or else item will remain selected
+        tableView_tags.getSelectionModel().clearSelection();
     }
 
     @FXML
@@ -184,9 +206,12 @@ public class AddImageController {
     @FXML
     protected void handleRemoveCaptionAction(ActionEvent event) {
         currentPictureCaptions.remove(tableView_captions.getSelectionModel().selectedIndexProperty().get());
+        //Must clear or else item will remain selected
+        tableView_captions.getSelectionModel().clearSelection();
     }
 
     @FXML
+    //If in edit mode should this delete picture? TODO
     protected void handleDeleteButtonAction(ActionEvent event) {
         //Remove picture at current index, shifting the other pictures down
         pictures.remove(currentPictureIndex.get());
@@ -202,7 +227,7 @@ public class AddImageController {
             //If current index is out of bounds of pictures list, check if no pictures remain
             if (currentPictureIndex.get() == 0) {
                 //If no pictures remain, return to homeDashboard
-                returnToHomeDashboard();
+                returnToPreviousScene();
             } else {
                 //If pictures still remain, subtract 1 from index and refresh page
                 currentPictureIndex.set(currentPictureIndex.get() - 1);
@@ -218,7 +243,19 @@ public class AddImageController {
         JFXDialogLayout layout = new JFXDialogLayout();
         Label dialogHeading = new Label("Confirm");
         layout.setHeading(dialogHeading);
-        Label dialogBody = new Label("Are you sure you want to add all these pictures?");
+
+        String dialogText = "";
+        if (mode.equals(AddEditImageScene.Mode.ADD)) {
+            if (pictures.size() == 1) {
+                dialogText = "Are you sure you want to add this picture?";
+            } else {
+                dialogText = "Are you sure you want to add all these pictures?";
+            }
+        } else if (mode.equals(AddEditImageScene.Mode.EDIT)) {
+            dialogText = "Are you sure you want to edit this picture?";
+        }
+
+        Label dialogBody = new Label(dialogText);
         layout.setBody(dialogBody);
         JFXButton yesButton = new JFXButton("YES");
         yesButton.getStyleClass().add("dialog-accept");
@@ -232,18 +269,29 @@ public class AddImageController {
 
         //Set listeners
         yesButton.setOnAction(yesButtonEvent -> {
-            //Current picture hasn't been saved yet so save
-            savePicture();
-            confirmationDialog.close();
+            if (mode.equals(AddEditImageScene.Mode.ADD)) {
+                //Current picture hasn't been saved yet so save
+                savePicture();
+                confirmationDialog.close();
 
-            startPictureAnalysis(yesButtonEvent);
+                startPictureAnalysis(yesButtonEvent);
+            } else if (mode.equals(AddEditImageScene.Mode.EDIT)) {
+                //Picture is sent as reference to picture in DAO so saving here will update picture in DAO
+                savePicture();
+                confirmationDialog.close();
+                openRefreshedImageDetailsScene(event, pictures.get(currentPictureIndex.get()));
+            }
         });
 
         noButton.setOnAction(noButtonEvent -> confirmationDialog.close());
     }
 
-    private void setTitleText() {
+    private void setAddTitleText() {
         label_title.setText("Add Image (" + (currentPictureIndex.get() + 1) + " of " + pictures.size() + ")");
+    }
+
+    private void setEditTitleText() {
+        label_title.setText("Edit Image"); //chg to picture for consistency
     }
 
     private void setupButtons() {
@@ -379,7 +427,7 @@ public class AddImageController {
     }
 
     private void refreshPage() {
-        setTitleText();
+        setAddTitleText();
         imageView_image.setImage(FileImport.importImage(pictures.get(currentPictureIndex.get())));
         textField_pictureName.setText(pictures.get(currentPictureIndex.get()).getName());
         setupTagsTableView();
@@ -409,7 +457,7 @@ public class AddImageController {
                     spinner_status.setVisible(false);
                 });
 
-                returnToHomeDashboard();
+                returnToPreviousScene();
             }
         });
     }
@@ -420,9 +468,17 @@ public class AddImageController {
         }
     }
 
-    private void returnToHomeDashboard() {
+    private void returnToPreviousScene() {
         Stage currentStage = (Stage) stackPane_content.getScene().getWindow();
         currentStage.setScene(previousScene);
         currentStage.show();
+    }
+
+    private void openRefreshedImageDetailsScene(Event event, Picture updatedPicture) {
+        Window currentWindow = ((Node) event.getTarget()).getScene().getWindow();
+        ImageDetailsScene imageDetailsScene = new ImageDetailsScene(new Bundle<>(updatedPicture));
+
+        //Previous Scene should be search scene not imagedetails scene
+        imageDetailsScene.start(secondPreviousScene, (Stage) currentWindow);
     }
 }

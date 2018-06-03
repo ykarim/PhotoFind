@@ -22,7 +22,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.Duration;
-import ui.addImage.AddImageScene;
+import ui.addEditImage.AddEditImageScene;
 import ui.search.SearchScene;
 import ui.settings.SettingsScene;
 import ui.util.Bundle;
@@ -213,9 +213,10 @@ public class HomeDashboardController {
     private void openAddImageScene(Event event, List<File> files) {
         Scene currentScene = ((Node) event.getTarget()).getScene();
         Window currentWindow = currentScene.getWindow();
-        AddImageScene addImageScene = new AddImageScene(new Bundle<>(files));
+        AddEditImageScene addEditImageScene = new AddEditImageScene(AddEditImageScene.Mode.ADD,
+                new Bundle<>(files));
 
-        addImageScene.start(currentScene, (Stage) currentWindow);
+        addEditImageScene.start(currentScene, (Stage) currentWindow);
     }
 
     private void openSettingsScene(Event event) {

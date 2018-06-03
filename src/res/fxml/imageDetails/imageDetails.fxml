@@ -24,8 +24,22 @@
                     </graphic>
                 </JFXButton>
                 <HBox alignment="CENTER_RIGHT" maxHeight="80.0" maxWidth="1.7976931348623157E308" prefHeight="80.0"
-                      HBox.hgrow="ALWAYS">
+                      spacing="10.0" HBox.hgrow="ALWAYS">
                     <children>
+                        <JFXButton alignment="CENTER" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY"
+                                   mnemonicParsing="false">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="REFRESH" size="30.0" strokeType="OUTSIDE"
+                                                     strokeWidth="0.0"/>
+                            </graphic>
+                        </JFXButton>
+                        <JFXButton fx:id="button_edit" alignment="CENTER" buttonType="RAISED"
+                                   contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false" onAction="#handleEditAction"
+                                   HBox.hgrow="ALWAYS">
+                            <graphic>
+                                <FontAwesomeIconView glyphName="EDIT" size="30.0"/>
+                            </graphic>
+                        </JFXButton>
                         <JFXButton fx:id="button_deleteButton" alignment="CENTER" buttonType="RAISED"
                                    contentDisplay="GRAPHIC_ONLY" HBox.hgrow="ALWAYS">
                             <graphic>
