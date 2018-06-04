@@ -31,6 +31,7 @@ import process.VisionAnalysisProcess;
 import ui.model.UICaption;
 import ui.model.UITag;
 import ui.util.AppController;
+import ui.util.AppScene;
 import ui.util.Bundle;
 import ui.util.SceneManager;
 import util.FileImport;
@@ -212,29 +213,34 @@ public class AddEditImageController implements AppController {
     }
 
     @FXML
-    //If in edit mode should this delete picture? TODO
     protected void handleDeleteButtonAction(ActionEvent event) {
-        //Remove picture at current index, shifting the other pictures down
-        pictures.remove(currentPictureIndex.get());
+        if (mode.equals(AddEditImageScene.Mode.ADD)) {
+            //Remove picture at current index, shifting the other pictures down
+            pictures.remove(currentPictureIndex.get());
 
-        //After removing element, check if current index exceeds picture size due to removing last element
-        if (currentPictureIndex.get() != pictures.size()) {
-            //Rebind buttons
-            setupButtons();
-
-            //Refresh Page
-            refreshPage();
-        } else if (currentPictureIndex.get() == pictures.size()) {
-            //If current index is out of bounds of pictures list, check if no pictures remain
-            if (currentPictureIndex.get() == 0) {
-                //If no pictures remain, return to homeDashboard
-                returnToPreviousScene();
-            } else {
-                //If pictures still remain, subtract 1 from index and refresh page
-                currentPictureIndex.set(currentPictureIndex.get() - 1);
+            //After removing element, check if current index exceeds picture size due to removing last element
+            if (currentPictureIndex.get() != pictures.size()) {
+                //Rebind buttons
                 setupButtons();
+
+                //Refresh Page
                 refreshPage();
+            } else if (currentPictureIndex.get() == pictures.size()) {
+                //If current index is out of bounds of pictures list, check if no pictures remain
+                if (currentPictureIndex.get() == 0) {
+                    //If no pictures remain, return to homeDashboard
+                    returnToPreviousScene();
+                } else {
+                    //If pictures still remain, subtract 1 from index and refresh page
+                    currentPictureIndex.set(currentPictureIndex.get() - 1);
+                    setupButtons();
+                    refreshPage();
+                }
             }
+        } else if (mode.equals(AddEditImageScene.Mode.EDIT)) {
+            pictureDAO.removePicture(pictures.get(currentPictureIndex.get()));
+            SceneManager.returnToPreviousScene(AppScene.Type.SEARCH);
+            SceneManager.refreshCurrentScene();
         }
     }
 

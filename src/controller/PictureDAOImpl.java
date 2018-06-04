@@ -87,4 +87,8 @@ public class PictureDAOImpl implements PictureDAO {
         pictures.remove(pictureToRemove);
         return pictureToRemove;
     }
+
+    public boolean removePicture(String id) {
+        return pictures.removeIf(picture -> picture.getId().equals(id));
+    }
 }
