@@ -2,7 +2,6 @@ package process;
 
 import javafx.concurrent.Task;
 import media.Picture;
-import media.descriptors.Caption;
 import media.descriptors.Description;
 import media.descriptors.Tag;
 import net.Connection;
@@ -19,12 +18,20 @@ import java.util.ArrayList;
 //Extends Task to record and update progress
 public class VisionAnalysisProcess extends Task<ArrayList<Picture>> implements RequestProcessWatcher {
 
-    private ArrayList<Picture> pictures;
+    private ArrayList<Picture> pictures = new ArrayList<>();
     private VisionRequestBuilder requestBuilder;
     private int analyzedCount = 0;
     private int totalCount;
 
     private double sentRequests;
+
+    public VisionAnalysisProcess(Picture picture) {
+        requestBuilder = new VisionRequestBuilder(VisionSettings.REGION, VisionSettings.VERSION);
+        Connection.getRequestProcessor().addWatcher(this);
+
+        this.pictures.add(picture);
+        this.totalCount = pictures.size();
+    }
 
     public VisionAnalysisProcess(ArrayList<Picture> pictures) {
         requestBuilder = new VisionRequestBuilder(VisionSettings.REGION, VisionSettings.VERSION);
@@ -53,16 +60,18 @@ public class VisionAnalysisProcess extends Task<ArrayList<Picture>> implements R
                 ArrayList<Tag> responseTags = analyzeResponse.getTags();
                 Description responseDescription = analyzeResponse.getDescription();
 
-                for (Tag tag : responseTags) {
-                    pictures.get(index).addTag(tag);
+                if (responseTags != null) {
+                    pictures.get(index).getTags().addAll(responseTags);
                 }
 
-                for (Caption caption : responseDescription.getCaptions()) {
-                    pictures.get(index).getDescription().addCaption(caption);
-                }
+                if (responseDescription != null) {
+                    if (responseDescription.getCaptions() != null) {
+                        pictures.get(index).getDescription().getCaptions().addAll(responseDescription.getCaptions());
+                    }
 
-                for (Tag descTag : responseDescription.getTags()) {
-                    pictures.get(index).getDescription().addTag(descTag);
+                    if (responseDescription.getTags() != null) {
+                        pictures.get(index).getDescription().getTags().addAll(responseDescription.getTags());
+                    }
                 }
 
                 analyzedCount++;

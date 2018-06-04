@@ -4,12 +4,22 @@ import java.util.ArrayList;
 
 public class Description {
 
-    private ArrayList<Caption> captions = new ArrayList<>();
-    private ArrayList<Tag> tags = new ArrayList<>();
+    private ArrayList<Caption> captions;
+    private ArrayList<Tag> tags;
 
     public Description(ArrayList<Caption> captions, ArrayList<Tag> tags) {
-        this.captions = captions;
-        this.tags = tags;
+        //Ensure both variables are initialized and not null
+        if (captions != null) {
+            this.captions = captions;
+        } else {
+            this.captions = new ArrayList<>();
+        }
+
+        if (tags != null) {
+            this.tags = tags;
+        } else {
+            this.tags = new ArrayList<>();
+        }
     }
 
     public ArrayList<Caption> getCaptions() {
