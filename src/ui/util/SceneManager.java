@@ -40,6 +40,7 @@ public class SceneManager {
             AppScene previousScene = scenes.get(scenes.size() - 2);
             if (previousScene.getStarted()) {
                 mainScene.setRoot(previousScene.getParent());
+                scenes.add(previousScene);
                 currentScene = previousScene;
             }
         }
@@ -50,6 +51,7 @@ public class SceneManager {
             AppScene previousScene = scenes.get(scenes.size() - (previousAmount + 1));
             if (previousScene.getStarted()) {
                 mainScene.setRoot(previousScene.getParent());
+                scenes.add(previousScene);
                 currentScene = previousScene;
             }
         }
@@ -61,6 +63,7 @@ public class SceneManager {
             if (sceneType.equals(scenes.get(index).getType())) {
                 AppScene scene = scenes.get(index);
                 mainScene.setRoot(scene.getParent());
+                scenes.add(scene);
                 currentScene = scene;
             }
         }
