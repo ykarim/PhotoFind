@@ -7,18 +7,18 @@ import controller.PictureDAOImpl;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 import media.Picture;
 import ui.image_info.ImageBox;
+import ui.util.AppController;
+import ui.util.AppScene;
 import ui.util.Bundle;
+import ui.util.SceneManager;
 
 import java.util.ArrayList;
 
-public class SearchController {
+public class SearchController implements AppController {
 
     @FXML
     protected JFXTextField textField_searchBar;
@@ -31,18 +31,16 @@ public class SearchController {
     @FXML
     protected JFXSpinner spinner_resultSpinner;
 
-    private Scene previousScene;
-
     private PictureDAOImpl pictureDAO = new PictureDAOImpl();
 
     public SearchController() {
 
     }
 
-    void initialize(Scene previousScene, Bundle<String> inputKeyBundle) {
-        this.previousScene = previousScene;
-
-        if (inputKeyBundle != null) {
+    @Override
+    public void initialize(Bundle dataBundle) {
+        if (dataBundle != null && dataBundle.getData() != null && dataBundle.getData() instanceof String) {
+            Bundle<String> inputKeyBundle = (Bundle<String>) dataBundle;
             String inputText = inputKeyBundle.getData();
 
             //Set text later as it must come after initialization otherwise text will be highlighted upon scene creation
@@ -71,9 +69,7 @@ public class SearchController {
 
     @FXML
     protected void handleBackButtonAction(ActionEvent event) {
-        Stage currentStage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
-        currentStage.setScene(previousScene);
-        currentStage.show();
+        SceneManager.returnToPreviousScene(AppScene.Type.DASHBOARD);
     }
 
     //known issue with lag after typing last character "y" where lastchar wouldnt show up till search complete
@@ -127,5 +123,10 @@ public class SearchController {
 
     private void setLoading(boolean value) {
         Platform.runLater(() -> spinner_resultSpinner.setVisible(value));
+    }
+
+    @Override
+    public void refresh() {
+        searchImagesByTag();
     }
 }

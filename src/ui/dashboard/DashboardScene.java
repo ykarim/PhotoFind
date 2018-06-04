@@ -1,4 +1,4 @@
-package ui.settings;
+package ui.dashboard;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -7,29 +7,25 @@ import ui.util.AppScene;
 
 import java.io.IOException;
 
-public class SettingsScene implements AppScene {
+public class DashboardScene implements AppScene {
 
-    private Parent root = null;
-    private SettingsController settingsController;
+    private Parent root;
+    private HomeDashboardController homeDashboardController;
     private boolean isStarted;
-
-    public SettingsScene() {
-
-    }
 
     @Override
     public Parent start() {
-        FXMLLoader settingsSceneLoader = new FXMLLoader();
-        settingsSceneLoader.setLocation(getClass().getResource("../../res/fxml/settings/settings.fxml"));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("../../res/fxml/dashboard/home.fxml"));
 
         try {
-            root = settingsSceneLoader.load();
+            root = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        settingsController = settingsSceneLoader.getController();
-        settingsController.initialize(null);
+        homeDashboardController = loader.getController();
+        homeDashboardController.initialize(null);
 
         return root;
     }
@@ -41,12 +37,12 @@ public class SettingsScene implements AppScene {
 
     @Override
     public AppController getController() {
-        return settingsController;
+        return homeDashboardController;
     }
 
     @Override
     public Type getType() {
-        return Type.SETTINGS;
+        return Type.DASHBOARD;
     }
 
     @Override

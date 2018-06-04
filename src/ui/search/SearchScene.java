@@ -2,15 +2,18 @@ package ui.search;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import ui.util.AppController;
+import ui.util.AppScene;
 import ui.util.Bundle;
 
 import java.io.IOException;
 
-public class SearchScene {
+public class SearchScene implements AppScene {
 
     private Bundle<String> keyInputData;
+    private Parent root;
+    private SearchController searchController;
+    private boolean isStarted;
 
     public SearchScene() {
 
@@ -20,11 +23,10 @@ public class SearchScene {
         this.keyInputData = keyInputData;
     }
 
-    public void start(Scene previousScene, Stage stage) {
+    @Override
+    public Parent start() {
         FXMLLoader searchScreenLoader = new FXMLLoader();
         searchScreenLoader.setLocation(getClass().getResource("../../res/fxml/search/search.fxml"));
-
-        Parent root = null;
 
         try {
             root = searchScreenLoader.load();
@@ -33,12 +35,35 @@ public class SearchScene {
         }
 
         if (root != null) {
-            SearchController searchController = searchScreenLoader.getController();
-            searchController.initialize(previousScene, keyInputData);
-
-            Scene scene = new Scene(root, 600, 480);
-            stage.setScene(scene);
-            stage.show();
+            searchController = searchScreenLoader.getController();
+            searchController.initialize(keyInputData);
         }
+
+        return root;
+    }
+
+    @Override
+    public Parent getParent() {
+        return root;
+    }
+
+    @Override
+    public AppController getController() {
+        return searchController;
+    }
+
+    @Override
+    public Type getType() {
+        return Type.SEARCH;
+    }
+
+    @Override
+    public boolean getStarted() {
+        return isStarted;
+    }
+
+    @Override
+    public void setStarted(boolean isStarted) {
+        this.isStarted = isStarted;
     }
 }

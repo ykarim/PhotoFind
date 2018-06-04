@@ -18,31 +18,28 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 import media.Picture;
 import media.descriptors.Caption;
 import media.descriptors.Tag;
 import process.VisionAnalysisProcess;
-import ui.imageDetails.ImageDetailsScene;
 import ui.model.UICaption;
 import ui.model.UITag;
+import ui.util.AppController;
 import ui.util.Bundle;
+import ui.util.SceneManager;
 import util.FileImport;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AddEditImageController {
+public class AddEditImageController implements AppController {
 
     @FXML
     private StackPane stackPane_content;
@@ -105,8 +102,6 @@ public class AddEditImageController {
     private JFXTreeTableColumn<UICaption, Double> tableColumn_captionConfidence;
 
     private AddEditImageScene.Mode mode;
-    private Scene previousScene;
-    private Scene secondPreviousScene;
     private PictureDAOImpl pictureDAO = new PictureDAOImpl();
     private ArrayList<Picture> pictures = new ArrayList<>();
     private ObservableList<UITag> currentPictureTags;
@@ -120,10 +115,8 @@ public class AddEditImageController {
 
     }
 
-    void initializeScene(AddEditImageScene.Mode mode, Scene previousScene, Bundle dataBundle) {
-        this.mode = mode;
-        this.previousScene = previousScene;
-
+    @Override
+    public void initialize(Bundle dataBundle) {
         imageView_image.fitHeightProperty().bind(anchorPane_imageHolder.heightProperty());
         imageView_image.fitWidthProperty().bind(anchorPane_imageHolder.widthProperty());
 
@@ -138,10 +131,9 @@ public class AddEditImageController {
             textField_pictureName.setText(pictures.get(currentPictureIndex.get()).getName());
 
             setAddTitleText();
-        } else if (mode.equals(AddEditImageScene.Mode.EDIT) && dataBundle.getData() instanceof List) {
-            Bundle<List> scenePictureBundle = (Bundle<List>) dataBundle;
-            this.secondPreviousScene = (Scene) scenePictureBundle.getData().get(0);
-            Picture picture = (Picture) scenePictureBundle.getData().get(1);
+        } else if (mode.equals(AddEditImageScene.Mode.EDIT) && dataBundle.getData() instanceof Picture) {
+            Bundle<Picture> pictureBundle = (Bundle<Picture>) dataBundle;
+            Picture picture = pictureBundle.getData();
             pictures.add(picture);
 
             imageView_image.setImage(FileImport.importImage(picture));
@@ -153,6 +145,15 @@ public class AddEditImageController {
         setupButtons();
         setupTagsTableView();
         setupCaptionsTableView();
+    }
+
+    @Override
+    public void refresh() {
+
+    }
+
+    public void setMode(AddEditImageScene.Mode mode) {
+        this.mode = mode;
     }
 
     @FXML
@@ -279,7 +280,7 @@ public class AddEditImageController {
                 //Picture is sent as reference to picture in DAO so saving here will update picture in DAO
                 savePicture();
                 confirmationDialog.close();
-                openRefreshedImageDetailsScene(event, pictures.get(currentPictureIndex.get()));
+                openRefreshedImageDetailsScene();
             }
         });
 
@@ -469,16 +470,11 @@ public class AddEditImageController {
     }
 
     private void returnToPreviousScene() {
-        Stage currentStage = (Stage) stackPane_content.getScene().getWindow();
-        currentStage.setScene(previousScene);
-        currentStage.show();
+        SceneManager.returnToPreviousScene();
     }
 
-    private void openRefreshedImageDetailsScene(Event event, Picture updatedPicture) {
-        Window currentWindow = ((Node) event.getTarget()).getScene().getWindow();
-        ImageDetailsScene imageDetailsScene = new ImageDetailsScene(new Bundle<>(updatedPicture));
-
-        //Previous Scene should be search scene not imagedetails scene
-        imageDetailsScene.start(secondPreviousScene, (Stage) currentWindow);
+    private void openRefreshedImageDetailsScene() {
+        SceneManager.returnToPreviousScene();
+        SceneManager.refreshCurrentScene();
     }
 }

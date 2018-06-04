@@ -1,21 +1,17 @@
 package ui.image_info;
 
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 import media.Picture;
 import ui.imageDetails.ImageDetailsScene;
 import ui.util.Bundle;
+import ui.util.SceneManager;
 import util.FileImport;
 
 import java.io.IOException;
@@ -49,7 +45,7 @@ public class ImageBox extends VBox {
         try {
             fxmlLoader.load();
         } catch (IOException exception) {
-            throw new RuntimeException(exception);
+            throw new RuntimeException(exception); //Catching and printing produces error and distorts shape
         }
     }
 
@@ -89,14 +85,12 @@ public class ImageBox extends VBox {
 
     @FXML
     public void handleActionEvent(MouseEvent event) {
-        openImageDetailsScene(event);
+        openImageDetailsScene();
     }
 
-    private void openImageDetailsScene(Event event) {
-        Scene currentScene = ((Node) event.getTarget()).getScene();
-        Window currentWindow = currentScene.getWindow();
+    private void openImageDetailsScene() {
         Bundle<Picture> pictureBundle = new Bundle<>(picture);
         ImageDetailsScene imageDetailsScene = new ImageDetailsScene(pictureBundle);
-        imageDetailsScene.start(currentScene, (Stage) currentWindow);
+        SceneManager.addScene(imageDetailsScene);
     }
 }

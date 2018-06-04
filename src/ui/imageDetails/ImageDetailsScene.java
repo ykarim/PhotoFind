@@ -2,26 +2,28 @@ package ui.imageDetails;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import media.Picture;
+import ui.util.AppController;
+import ui.util.AppScene;
 import ui.util.Bundle;
 
 import java.io.IOException;
 
-public class ImageDetailsScene {
+public class ImageDetailsScene implements AppScene {
 
     private Bundle<Picture> pictureBundle;
+    private Parent root;
+    private ImageDetailsController imageDetailsController;
+    private boolean isStarted;
 
     public ImageDetailsScene(Bundle<Picture> pictureBundle) {
         this.pictureBundle = pictureBundle;
     }
 
-    public void start(Scene previousScene, Stage stage) {
+    @Override
+    public Parent start() {
         FXMLLoader imageDetailsLoader = new FXMLLoader();
         imageDetailsLoader.setLocation(getClass().getResource("../../res/fxml/imageDetails/imageDetails.fxml"));
-
-        Parent root = null;
 
         try {
             root = imageDetailsLoader.load();
@@ -30,12 +32,35 @@ public class ImageDetailsScene {
         }
 
         if (root != null) {
-            ImageDetailsController imageDetailsController = imageDetailsLoader.getController();
-            imageDetailsController.initialize(previousScene, pictureBundle);
-
-            Scene scene = new Scene(root, 600, 480);
-            stage.setScene(scene);
-            stage.show();
+            imageDetailsController = imageDetailsLoader.getController();
+            imageDetailsController.initialize(pictureBundle);
         }
+
+        return root;
+    }
+
+    @Override
+    public Parent getParent() {
+        return root;
+    }
+
+    @Override
+    public AppController getController() {
+        return imageDetailsController;
+    }
+
+    @Override
+    public Type getType() {
+        return Type.IMAGEDETAILS;
+    }
+
+    @Override
+    public boolean getStarted() {
+        return isStarted;
+    }
+
+    @Override
+    public void setStarted(boolean isStarted) {
+        this.isStarted = isStarted;
     }
 }

@@ -10,7 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -19,19 +18,19 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.util.Duration;
 import ui.addEditImage.AddEditImageScene;
 import ui.search.SearchScene;
 import ui.settings.SettingsScene;
+import ui.util.AppController;
 import ui.util.Bundle;
+import ui.util.SceneManager;
 
 import java.io.File;
 import java.net.URL;
 import java.util.List;
 
-public class HomeDashboardController {
+public class HomeDashboardController implements AppController {
 
     @FXML
     private AnchorPane anchorPane_content;
@@ -82,7 +81,8 @@ public class HomeDashboardController {
 
     }
 
-    public void initialize() {
+    @Override
+    public void initialize(Bundle dataBundle) {
         //Set Hamburger animation
         HamburgerSlideCloseTransition transition = new HamburgerSlideCloseTransition(hamburger);
         transition.setRate(-1);
@@ -146,7 +146,7 @@ public class HomeDashboardController {
 
     @FXML
     protected void handleMenuSettingsAction(ActionEvent event) {
-        openSettingsScene(event);
+        openSettingsScene();
     }
 
     @FXML
@@ -176,7 +176,7 @@ public class HomeDashboardController {
         List<File> files = fileChooser.showOpenMultipleDialog(((Node) event.getTarget()).getScene().getWindow());
 
         if (files != null && files.size() > 0) {
-            openAddImageScene(event, files);
+            openAddImageScene(files);
         }
     }
 
@@ -193,37 +193,34 @@ public class HomeDashboardController {
     }
 
     private void openSearchScene(Event event) {
-        Scene currentScene = ((Node) event.getTarget()).getScene();
-        Window currentWindow = currentScene.getWindow();
-        SearchScene scene;
+        SearchScene searchScene;
 
         if (event instanceof KeyEvent) {
             KeyEvent keyEvent = ((KeyEvent) event);
             String inputText = keyEvent.getCharacter();//mb try reading val of textfield //if copy paste
 
             Bundle<String> keyInputData = new Bundle<>(inputText);
-            scene = new SearchScene(keyInputData);
+            searchScene = new SearchScene(keyInputData);
         } else {
-            scene = new SearchScene();
+            searchScene = new SearchScene();
         }
 
-        scene.start(currentScene, (Stage) currentWindow);
+        SceneManager.addScene(searchScene);
     }
 
-    private void openAddImageScene(Event event, List<File> files) {
-        Scene currentScene = ((Node) event.getTarget()).getScene();
-        Window currentWindow = currentScene.getWindow();
+    private void openAddImageScene(List<File> files) {
         AddEditImageScene addEditImageScene = new AddEditImageScene(AddEditImageScene.Mode.ADD,
                 new Bundle<>(files));
-
-        addEditImageScene.start(currentScene, (Stage) currentWindow);
+        SceneManager.addScene(addEditImageScene);
     }
 
-    private void openSettingsScene(Event event) {
-        Scene currentScene = ((Node) event.getTarget()).getScene();
-        Window currentWindow = currentScene.getWindow();
+    private void openSettingsScene() {
         SettingsScene settingsScene = new SettingsScene();
+        SceneManager.addScene(settingsScene);
+    }
 
-        settingsScene.start(currentScene, (Stage) currentWindow);
+    @Override
+    public void refresh() {
+
     }
 }

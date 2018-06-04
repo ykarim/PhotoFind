@@ -5,12 +5,12 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import net.Subscription;
+import ui.util.AppController;
+import ui.util.Bundle;
+import ui.util.SceneManager;
 
-public class SettingsController {
+public class SettingsController implements AppController {
 
     @FXML
     private JFXTextField textField_key;
@@ -18,11 +18,8 @@ public class SettingsController {
     @FXML
     private JFXButton button_submit;
 
-    private Scene previousScene;
-
-    void initialize(Scene previousScene) {
-        this.previousScene = previousScene;
-
+    @Override
+    public void initialize(Bundle dataBundle) {
         textField_key.setText(Subscription.getSubscriptionKey());
 
         textField_key.focusedProperty().addListener((o, oldVal, newVal) -> {
@@ -58,8 +55,11 @@ public class SettingsController {
     }
 
     private void returnToPreviousScene(Event event) {
-        Stage currentStage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
-        currentStage.setScene(previousScene);
-        currentStage.show();
+        SceneManager.returnToPreviousScene();
+    }
+
+    @Override
+    public void refresh() {
+        textField_key.setText(Subscription.getSubscriptionKey());
     }
 }

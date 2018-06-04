@@ -5,29 +5,26 @@ import controller.PictureDAOImpl;
 import javafx.application.Platform;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 import media.Picture;
 import media.descriptors.Caption;
 import media.descriptors.Tag;
 import process.VisionAnalysisProcess;
 import ui.addEditImage.AddEditImageScene;
+import ui.util.AppController;
+import ui.util.AppScene;
 import ui.util.Bundle;
+import ui.util.SceneManager;
 import util.FileImport;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class ImageDetailsController {
+public class ImageDetailsController implements AppController {
 
     @FXML
     private JFXSpinner spinner_status;
@@ -56,30 +53,30 @@ public class ImageDetailsController {
     @FXML
     private Label label_captionsLabel;
 
-    private Scene previousScene;
     private Picture currentPicture;
     private PictureDAOImpl pictureDAO = new PictureDAOImpl();
 
-    void initialize(Scene previousScene, Bundle<Picture> pictureBundle) {
-        this.previousScene = previousScene;
-        this.currentPicture = pictureBundle.getData();
+    @Override
+    public void initialize(Bundle dataBundle) {
+        if (dataBundle != null && dataBundle.getData() != null && dataBundle.getData() instanceof Picture) {
+            Bundle<Picture> pictureBundle = (Bundle<Picture>) dataBundle;
+            this.currentPicture = pictureBundle.getData();
 
-        //Set sizing of imageView to fill anchorPane
-        imageView_image.fitHeightProperty().bind(anchorPane_imageHolder.heightProperty());
-        imageView_image.fitWidthProperty().bind(anchorPane_imageHolder.widthProperty());
+            //Set sizing of imageView to fill anchorPane
+            imageView_image.fitHeightProperty().bind(anchorPane_imageHolder.heightProperty());
+            imageView_image.fitWidthProperty().bind(anchorPane_imageHolder.widthProperty());
 
-        //Populate fields with picture data
-        imageView_image.setImage(FileImport.importImage(currentPicture));
-        label_nameLabel.setText(currentPicture.getName());
-        label_tagsLabel.setText(generateTagString(currentPicture.getTags()));
-        label_captionsLabel.setText(generateCaptionsString(currentPicture.getDescription().getCaptions()));
+            //Populate fields with picture data
+            imageView_image.setImage(FileImport.importImage(currentPicture));
+            label_nameLabel.setText(currentPicture.getName());
+            label_tagsLabel.setText(generateTagString(currentPicture.getTags()));
+            label_captionsLabel.setText(generateCaptionsString(currentPicture.getDescription().getCaptions()));
+        }
     }
 
     @FXML
     protected void handleBackButtonAction(ActionEvent event) {
-        Stage currentStage = (Stage) ((Node) event.getTarget()).getScene().getWindow();
-        currentStage.setScene(previousScene);
-        currentStage.show();
+        SceneManager.returnToPreviousScene(AppScene.Type.SEARCH);
     }
 
     @FXML
@@ -90,7 +87,7 @@ public class ImageDetailsController {
 
     @FXML
     protected void handleEditAction(ActionEvent event) {
-        openEditImageScene(event);
+        openEditImageScene();
     }
 
     private String generateTagString(ArrayList<Tag> tags) {
@@ -125,16 +122,10 @@ public class ImageDetailsController {
         return captionsString.toString();
     }
 
-    private void openEditImageScene(Event event) {
-        Scene currentScene = ((Node) event.getTarget()).getScene();
-        Window currentWindow = currentScene.getWindow();
-        List<Object> scenePictureData = new ArrayList<>();
-        scenePictureData.add(previousScene);
-        scenePictureData.add(currentPicture);
+    private void openEditImageScene() {
         AddEditImageScene editImageScene = new AddEditImageScene(AddEditImageScene.Mode.EDIT,
-                new Bundle<>(scenePictureData));
-
-        editImageScene.start(currentScene, (Stage) currentWindow);
+                new Bundle<>(currentPicture));
+        SceneManager.addScene(editImageScene);
     }
 
     private void syncPicture() {
@@ -160,7 +151,7 @@ public class ImageDetailsController {
                 pictureDAO.getAllPictures().set(index, currentPicture);
 
                 Platform.runLater(() -> {
-                    refreshScene();
+                    refresh();
                     anchorPane_content.setOpacity(1.0);
                     spinner_status.setVisible(false);
                     spinner_status.progressProperty().unbind();
@@ -171,7 +162,8 @@ public class ImageDetailsController {
         });
     }
 
-    private void refreshScene() {
+    @Override
+    public void refresh() {
         label_tagsLabel.setText(generateTagString(currentPicture.getTags()));
         label_captionsLabel.setText(generateCaptionsString(currentPicture.getDescription().getCaptions()));
     }

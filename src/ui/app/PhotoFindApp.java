@@ -2,17 +2,14 @@ package ui.app;
 
 import controller.PictureDAOImpl;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import media.Picture;
 import media.descriptors.Caption;
 import media.descriptors.Description;
-import ui.dashboard.HomeDashboardController;
+import ui.dashboard.DashboardScene;
+import ui.util.SceneManager;
 import util.FileImport;
 
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class PhotoFindApp extends Application {
@@ -37,23 +34,7 @@ public class PhotoFindApp extends Application {
             new PictureDAOImpl().addPicture(picture);
         }
 
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("../../res/fxml/dashboard/home.fxml"));
-
-        Parent root = null;
-        try {
-            root = loader.load();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        HomeDashboardController homeDashboardController = loader.getController();
-        homeDashboardController.initialize();
-
-        Scene scene = new Scene(root, 600, 480);
-
-        stage.setTitle("PhotoFind");
-        stage.setScene(scene);
-        stage.show();
+        DashboardScene dashboardScene = new DashboardScene();
+        SceneManager.initProgram(stage, dashboardScene);
     }
 }
