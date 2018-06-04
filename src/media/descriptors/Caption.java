@@ -6,8 +6,17 @@ public class Caption {
     private Double confidence;
 
     public Caption(String text, Double confidence) {
-        this.text = text;
-        this.confidence = confidence;
+        if (text == null) {
+            this.text = "";
+        } else {
+            this.text = text;
+        }
+
+        if (confidence == null) {
+            this.confidence = Double.NaN;
+        } else {
+            this.confidence = confidence;
+        }
     }
 
     public String getText() {

@@ -6,13 +6,27 @@ public class Tag {
     private Double confidence;
 
     public Tag(String name) {
-        this.name = name;
+        if (name == null) {
+            this.name = "";
+        } else {
+            this.name = name;
+        }
+
         this.confidence = Double.NaN;
     }
 
     public Tag(String name, Double confidence) {
-        this.name = name;
-        this.confidence = confidence;
+        if (name == null) {
+            this.name = "";
+        } else {
+            this.name = name;
+        }
+
+        if (confidence == null) {
+            confidence = Double.NaN;
+        } else {
+            this.confidence = confidence;
+        }
     }
 
     public String getName() {

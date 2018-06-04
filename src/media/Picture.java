@@ -28,23 +28,68 @@ public class Picture extends MediaFile {
 
     Picture(File file, String id, String name) {
         super(file);
-        this.id = id;
-        this.name = name;
+
+        if (id == null || id.isEmpty()) {
+            this.id = UUID.randomUUID().toString();
+        } else {
+            this.id = id;
+        }
+
+        if (name == null) {
+            this.name = "";
+        } else {
+            this.name = name;
+        }
     }
 
     Picture(File file, String id, String name, ArrayList<Tag> tags) {
         super(file);
-        this.id = id;
-        this.name = name;
-        this.tags = tags;
+
+        if (id == null || id.isEmpty()) {
+            this.id = UUID.randomUUID().toString();
+        } else {
+            this.id = id;
+        }
+
+        if (name == null) {
+            this.name = "";
+        } else {
+            this.name = name;
+        }
+
+        if (tags == null) {
+            tags = new ArrayList<>();
+        } else {
+            this.tags = tags;
+        }
     }
 
     Picture(File file, String id, String name, ArrayList<Tag> tags, Description description) {
         super(file);
-        this.id = id;
-        this.name = name;
-        this.tags = tags;
-        this.description = description;
+
+        if (id == null || id.isEmpty()) {
+            this.id = UUID.randomUUID().toString();
+        } else {
+            this.id = id;
+        }
+
+        if (name == null) {
+            this.name = "";
+        } else {
+            this.name = name;
+        }
+
+        if (tags == null) {
+            tags = new ArrayList<>();
+        } else {
+            this.tags = tags;
+        }
+
+        if (this.description == null) {
+            this.description = new Description(new ArrayList<>(), new ArrayList<>());
+        } else {
+            this.description = description;
+        }
     }
 
     public String getId() {
