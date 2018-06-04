@@ -90,6 +90,13 @@ public class ImageDetailsController implements AppController {
         openEditImageScene();
     }
 
+    @FXML
+    protected void handleDeleteAction(ActionEvent event) {
+        pictureDAO.removePicture(currentPicture);
+        SceneManager.returnToPreviousScene();
+        SceneManager.refreshCurrentScene();
+    }
+
     private String generateTagString(ArrayList<Tag> tags) {
         StringBuilder tagString = new StringBuilder();
 

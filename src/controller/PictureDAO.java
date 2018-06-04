@@ -16,5 +16,5 @@ public interface PictureDAO {
 
     Picture updatePicture(Picture picture);
 
-    Picture deletePicture(Picture picture);
+    Picture removePicture(Picture picture);
 }

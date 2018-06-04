@@ -45,7 +45,8 @@
                                     </graphic>
                                 </JFXButton>
                                 <JFXButton fx:id="button_deleteButton" alignment="CENTER" buttonType="RAISED"
-                                           contentDisplay="GRAPHIC_ONLY" HBox.hgrow="ALWAYS">
+                                           contentDisplay="GRAPHIC_ONLY" onAction="#handleDeleteAction"
+                                           HBox.hgrow="ALWAYS">
                                     <graphic>
                                         <FontAwesomeIconView glyphName="TRASH" size="30.0"/>
                                     </graphic>

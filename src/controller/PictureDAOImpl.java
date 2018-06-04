@@ -83,8 +83,8 @@ public class PictureDAOImpl implements PictureDAO {
     }
 
     @Override
-    public Picture deletePicture(Picture pictureToDelete) {
-        pictures.remove(pictureToDelete);
-        return pictureToDelete;
+    public Picture removePicture(Picture pictureToRemove) {
+        pictures.remove(pictureToRemove);
+        return pictureToRemove;
     }
 }
