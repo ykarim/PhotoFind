@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import de.jensd.fx.glyphs.fontawesome.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import java.net.URL?>
+<AnchorPane xmlns:fx="http://javafx.com/fxml/1" fx:id="anchorPane_content" maxHeight="1.7976931348623157E308"
+            maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0"
+            prefWidth="600.0" styleClass="root" xmlns="http://javafx.com/javafx/8.0.121"
+            fx:controller="org.photofind.ui.dashboard.HomeDashboardController">
+    <stylesheets>
+        <URL value="@../stylesheets/dark_theme.css"/>
+    </stylesheets>
+    <children>
+        <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+              prefHeight="75.0" prefWidth="600.0" styleClass="title" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <JFXHamburger fx:id="hamburger" onMousePressed="#handleHamburgerPress"/>
+                <Label alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                       text="PhotoFind" HBox.hgrow="ALWAYS">
+                    <HBox.margin>
+                        <Insets/>
+                    </HBox.margin>
+                    <font>
+                        <Font size="24.0"/>
+                    </font>
+                </Label>
+            </children>
+            <padding>
+                <Insets left="25.0" right="25.0"/>
+            </padding>
+            <effect>
+                <DropShadow height="10.0" radius="4.5" width="10.0"/>
+            </effect>
+        </HBox>
+        <HBox fx:id="hBox_search" alignment="CENTER_LEFT" layoutY="75.0" maxHeight="1.7976931348623157E308"
+              maxWidth="1.7976931348623157E308" prefHeight="50.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="75.0">
+            <padding>
+                <Insets left="25.0" right="25.0"/>
+            </padding>
+            <children>
+                <JFXTextField fx:id="textField_searchBar" onKeyTyped="#handleSearchBarKeyTyped" promptText="Search"
+                              HBox.hgrow="ALWAYS">
+                    <HBox.margin>
+                        <Insets right="25.0"/>
+                    </HBox.margin>
+                </JFXTextField>
+                <JFXButton fx:id="button_search" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY"
+                           mnemonicParsing="false" onAction="#handleSearchButtonAction">
+                    <graphic>
+                        <FontAwesomeIconView fx:id="icon_search" glyphName="SEARCH" size="32.0">
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                        </FontAwesomeIconView>
+                    </graphic>
+                </JFXButton>
+            </children>
+        </HBox>
+        <HBox fx:id="hBox_upload" alignment="CENTER_RIGHT" layoutY="400.0" maxHeight="1.7976931348623157E308"
+              maxWidth="1.7976931348623157E308" prefHeight="80.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+            <children>
+                <JFXButton fx:id="button_upload" alignment="CENTER" buttonType="RAISED" contentDisplay="CENTER"
+                           graphicTextGap="0.0" onAction="#handleUploadButtonAction" styleClass="floating-button"
+                           text=" " textAlignment="CENTER" HBox.hgrow="ALWAYS">
+                    <graphic>
+                        <FontAwesomeIconView fill="WHITE" glyphName="UPLOAD" size="30.0" textAlignment="CENTER"/>
+                    </graphic>
+                    <HBox.margin>
+                        <Insets right="10.0"/>
+                    </HBox.margin>
+                    <cursor>
+                        <Cursor fx:constant="HAND"/>
+                    </cursor>
+                    <effect>
+                        <DropShadow height="20.0" radius="9.5" width="20.0"/>
+                    </effect>
+                </JFXButton>
+            </children>
+        </HBox>
+        <VBox fx:id="vBox_images" layoutY="125.0" prefHeight="270.0" prefWidth="600.0" AnchorPane.bottomAnchor="85.0"
+              AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="125.0">
+            <children>
+                <GridPane alignment="CENTER" hgap="50.0" maxHeight="1.7976931348623157E308"
+                          maxWidth="1.7976931348623157E308" minHeight="270.0" minWidth="600.0" vgap="20.0"
+                          VBox.vgrow="ALWAYS">
+                    <columnConstraints>
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                    </rowConstraints>
+                    <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+                    </padding>
+                    <children>
+                        <VBox fx:id="vBox_imageBoxOne" alignment="CENTER" maxHeight="1.7976931348623157E308"
+                              maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity"
+                              prefHeight="200.0" prefWidth="150.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS"
+                              GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+                            <stylesheets>
+                                <URL value="@../stylesheets/image_info.css"/>
+                            </stylesheets>
+                            <children>
+                                <AnchorPane fx:id="anchorPane_imageHolder" maxHeight="1.7976931348623157E308"
+                                            maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
+                                            prefHeight="150.0" prefWidth="200.0" styleClass="image" VBox.vgrow="ALWAYS">
+                                    <children>
+                                        <ImageView fx:id="imageview_image" pickOnBounds="true"
+                                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                                    </children>
+                                </AnchorPane>
+                                <HBox alignment="CENTER_LEFT" fillHeight="false" maxHeight="100.0" maxWidth="300.0"
+                                      minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="150.0"
+                                      styleClass="imageHeader" VBox.vgrow="ALWAYS">
+                                    <children>
+                                        <FontAwesomeIconView fill="#dd1515" glyphName="FILE_IMAGE_ALT" size="2.5em"
+                                                             HBox.hgrow="ALWAYS"/>
+                                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                              prefHeight="50.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                            <HBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                            </HBox.margin>
+                                            <children>
+                                                <Label fx:id="label_filename" maxHeight="1.7976931348623157E308"
+                                                       maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                                    <font>
+                                                        <Font name="System Bold" size="15.0"/>
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="label_editdate" maxHeight="1.7976931348623157E308"
+                                                       maxWidth="1.7976931348623157E308" textFill="#00000086"
+                                                       VBox.vgrow="ALWAYS">
+                                                    <font>
+                                                        <Font size="10.0"/>
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+                                        <FontAwesomeIconView glyphName="ELLIPSIS_V" size="2.5em"/>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                    </padding>
+                                </HBox>
+                            </children>
+                            <effect>
+                                <DropShadow/>
+                            </effect>
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                        </VBox>
+                        <VBox fx:id="vBox_imageBoxTwo" alignment="CENTER" layoutX="30.0" layoutY="30.0"
+                              maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
+                              minWidth="-Infinity" prefHeight="200.0" prefWidth="150.0" GridPane.columnIndex="1"
+                              GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER"
+                              GridPane.vgrow="ALWAYS">
+                            <stylesheets>
+                                <URL value="@../stylesheets/image_info.css"/>
+                            </stylesheets>
+                            <children>
+                                <AnchorPane fx:id="anchorPane_imageHolder1" maxHeight="1.7976931348623157E308"
+                                            maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
+                                            prefHeight="150.0" prefWidth="200.0" styleClass="image" VBox.vgrow="ALWAYS">
+                                    <children>
+                                        <ImageView fx:id="imageview_image1" pickOnBounds="true"
+                                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                                    </children>
+                                </AnchorPane>
+                                <HBox alignment="CENTER_LEFT" fillHeight="false" maxHeight="100.0" maxWidth="300.0"
+                                      minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="150.0"
+                                      styleClass="imageHeader" VBox.vgrow="ALWAYS">
+                                    <children>
+                                        <FontAwesomeIconView fill="#dd1515" glyphName="FILE_IMAGE_ALT" size="2.5em"
+                                                             HBox.hgrow="ALWAYS"/>
+                                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                              prefHeight="50.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                            <HBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                            </HBox.margin>
+                                            <children>
+                                                <Label fx:id="label_filename1" maxHeight="1.7976931348623157E308"
+                                                       maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                                    <font>
+                                                        <Font name="System Bold" size="15.0"/>
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="label_editdate1" maxHeight="1.7976931348623157E308"
+                                                       maxWidth="1.7976931348623157E308" textFill="#00000086"
+                                                       VBox.vgrow="ALWAYS">
+                                                    <font>
+                                                        <Font size="10.0"/>
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+                                        <FontAwesomeIconView glyphName="ELLIPSIS_V" size="2.5em"/>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                    </padding>
+                                </HBox>
+                            </children>
+                            <effect>
+                                <DropShadow/>
+                            </effect>
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                        </VBox>
+                        <VBox fx:id="vBox_imageBoxThree" alignment="CENTER" layoutX="234.0" layoutY="30.0"
+                              maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity"
+                              minWidth="-Infinity" prefHeight="200.0" prefWidth="150.0" GridPane.columnIndex="2"
+                              GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="CENTER"
+                              GridPane.vgrow="ALWAYS">
+                            <stylesheets>
+                                <URL value="@../stylesheets/image_info.css"/>
+                            </stylesheets>
+                            <children>
+                                <AnchorPane fx:id="anchorPane_imageHolder11" maxHeight="1.7976931348623157E308"
+                                            maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0"
+                                            prefHeight="150.0" prefWidth="200.0" styleClass="image" VBox.vgrow="ALWAYS">
+                                    <children>
+                                        <ImageView fx:id="imageview_image11" pickOnBounds="true"
+                                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                                    </children>
+                                </AnchorPane>
+                                <HBox alignment="CENTER_LEFT" fillHeight="false" maxHeight="100.0" maxWidth="300.0"
+                                      minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="150.0"
+                                      styleClass="imageHeader" VBox.vgrow="ALWAYS">
+                                    <children>
+                                        <FontAwesomeIconView fill="#dd1515" glyphName="FILE_IMAGE_ALT" size="2.5em"
+                                                             HBox.hgrow="ALWAYS"/>
+                                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                                              prefHeight="50.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                                            <HBox.margin>
+                                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                            </HBox.margin>
+                                            <children>
+                                                <Label fx:id="label_filename11" maxHeight="1.7976931348623157E308"
+                                                       maxWidth="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+                                                    <font>
+                                                        <Font name="System Bold" size="15.0"/>
+                                                    </font>
+                                                </Label>
+                                                <Label fx:id="label_editdate11" maxHeight="1.7976931348623157E308"
+                                                       maxWidth="1.7976931348623157E308" textFill="#00000086"
+                                                       VBox.vgrow="ALWAYS">
+                                                    <font>
+                                                        <Font size="10.0"/>
+                                                    </font>
+                                                </Label>
+                                            </children>
+                                        </VBox>
+                                        <FontAwesomeIconView glyphName="ELLIPSIS_V" size="2.5em"/>
+                                    </children>
+                                    <padding>
+                                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
+                                    </padding>
+                                </HBox>
+                            </children>
+                            <effect>
+                                <DropShadow/>
+                            </effect>
+                            <cursor>
+                                <Cursor fx:constant="HAND"/>
+                            </cursor>
+                        </VBox>
+                    </children>
+                </GridPane>
+            </children>
+        </VBox>
+        <VBox fx:id="vBox_sidemenu" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+              minHeight="-Infinity" minWidth="-Infinity" prefHeight="405.0" prefWidth="200.0"
+              style="-fx-background-color: WHITE;" visible="false" AnchorPane.bottomAnchor="0.0"
+              AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="75.0">
+            <children>
+                <AnchorPane fx:id="anchorPane_imageHolder2" maxHeight="1.7976931348623157E308"
+                            maxWidth="1.7976931348623157E308" prefHeight="150.0" prefWidth="200.0">
+                    <children>
+                        <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true"
+                                   AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                                   AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+                    </children>
+                </AnchorPane>
+                <JFXButton fx:id="button_menuSearch" buttonType="RAISED" maxHeight="1.7976931348623157E308"
+                           maxWidth="1.7976931348623157E308" minHeight="50.0" text="Search"/>
+                <JFXButton fx:id="button_menuSettings" buttonType="RAISED" maxHeight="1.7976931348623157E308"
+                           maxWidth="1.7976931348623157E308" minHeight="50.0" onAction="#handleMenuSettingsAction"
+                           text="Settings"/>
+                <JFXButton fx:id="button_menuHelp" buttonType="RAISED" maxHeight="1.7976931348623157E308"
+                           maxWidth="1.7976931348623157E308" minHeight="50.0" text="Help"/>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>

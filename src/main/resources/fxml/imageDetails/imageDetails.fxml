@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+           minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="600.0"
+           stylesheets="@../stylesheets/dark_theme.css" xmlns="http://javafx.com/javafx/8.0.121"
+           fx:controller="org.photofind.ui.imageDetails.ImageDetailsController">
+    <AnchorPane fx:id="anchorPane_content" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="600.0">
+        <HBox alignment="CENTER_LEFT" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+              prefHeight="80.0" prefWidth="600.0" styleClass="title" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <padding>
+                <Insets left="25.0" right="25.0"/>
+            </padding>
+            <effect>
+                <DropShadow/>
+            </effect>
+            <JFXButton fx:id="button_backButton" alignment="CENTER" buttonType="RAISED"
+                       contentDisplay="GRAPHIC_ONLY" onAction="#handleBackButtonAction" HBox.hgrow="ALWAYS">
+                <graphic>
+                    <FontAwesomeIconView glyphName="CHEVRON_LEFT" size="30.0"/>
+                </graphic>
+            </JFXButton>
+            <HBox alignment="CENTER_RIGHT" maxHeight="80.0" maxWidth="1.7976931348623157E308"
+                  prefHeight="80.0" spacing="10.0" HBox.hgrow="ALWAYS">
+                <JFXButton fx:id="button_sync" alignment="CENTER" buttonType="RAISED"
+                           contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false"
+                           onAction="#handleSyncAction">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="REFRESH" size="30.0" strokeType="OUTSIDE"
+                                             strokeWidth="0.0"/>
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="button_edit" alignment="CENTER" buttonType="RAISED"
+                           contentDisplay="GRAPHIC_ONLY" mnemonicParsing="false"
+                           onAction="#handleEditAction" HBox.hgrow="ALWAYS">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="EDIT" size="30.0"/>
+                    </graphic>
+                </JFXButton>
+                <JFXButton fx:id="button_deleteButton" alignment="CENTER" buttonType="RAISED"
+                           contentDisplay="GRAPHIC_ONLY" onAction="#handleDeleteAction"
+                           HBox.hgrow="ALWAYS">
+                    <graphic>
+                        <FontAwesomeIconView glyphName="TRASH" size="30.0"/>
+                    </graphic>
+                </JFXButton>
+            </HBox>
+        </HBox>
+        <HBox alignment="TOP_CENTER" layoutX="-300.0" layoutY="-120.0" maxHeight="1.7976931348623157E308"
+              maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0"
+              AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+              AnchorPane.topAnchor="80.0">
+            <padding>
+                <Insets bottom="25.0" left="25.0" right="25.0" top="25.0"/>
+            </padding>
+            <AnchorPane fx:id="anchorPane_imageHolder" maxHeight="1.7976931348623157E308"
+                        maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="350.0"
+                        prefWidth="275.0" HBox.hgrow="ALWAYS">
+                <HBox.margin>
+                    <Insets right="25.0"/>
+                </HBox.margin>
+                <ImageView fx:id="imageView_image" fitHeight="350.0" fitWidth="275.0"
+                           pickOnBounds="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0"/>
+            </AnchorPane>
+            <ScrollPane fitToHeight="true" fitToWidth="true" maxHeight="1.7976931348623157E308"
+                        maxWidth="1.7976931348623157E308" prefHeight="350.0" prefWidth="275.0"
+                        HBox.hgrow="ALWAYS">
+                <GridPane hgap="20.0" prefHeight="350.0" prefWidth="275.0" vgap="20.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="NEVER" maxWidth="-Infinity" minWidth="-Infinity"/>
+                        <ColumnConstraints hgrow="ALWAYS" maxWidth="1.7976931348623157E308"/>
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="1.7976931348623157E308" valignment="TOP"
+                                        vgrow="ALWAYS"/>
+                        <RowConstraints maxHeight="1.7976931348623157E308" valignment="TOP"
+                                        vgrow="ALWAYS"/>
+                        <RowConstraints maxHeight="1.7976931348623157E308" valignment="TOP"
+                                        vgrow="ALWAYS"/>
+                    </rowConstraints>
+                    <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308"
+                           maxWidth="1.7976931348623157E308" minHeight="-Infinity"
+                           minWidth="-Infinity" text="Name:">
+                        <font>
+                            <Font name="System Bold" size="12.0"/>
+                        </font>
+                    </Label>
+                    <Label fx:id="label_nameLabel" alignment="TOP_LEFT"
+                           maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                           wrapText="true" GridPane.columnIndex="1"/>
+                    <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308"
+                           maxWidth="1.7976931348623157E308" minHeight="-Infinity"
+                           minWidth="-Infinity" text="Tags:" GridPane.rowIndex="1">
+                        <font>
+                            <Font name="System Bold" size="12.0"/>
+                        </font>
+                    </Label>
+                    <Label fx:id="label_tagsLabel" alignment="TOP_LEFT"
+                           maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                           wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                    <Label alignment="TOP_LEFT" maxHeight="1.7976931348623157E308"
+                           maxWidth="1.7976931348623157E308" text="Caption(s):"
+                           GridPane.rowIndex="2">
+                        <font>
+                            <Font name="System Bold" size="12.0"/>
+                        </font>
+                    </Label>
+                    <Label fx:id="label_captionsLabel" alignment="TOP_LEFT"
+                           maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
+                           wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                </GridPane>
+            </ScrollPane>
+        </HBox>
+    </AnchorPane>
+    <JFXSpinner fx:id="spinner_status" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0"
+                prefWidth="200.0" progress="0.0" visible="false"/>
+</StackPane>
