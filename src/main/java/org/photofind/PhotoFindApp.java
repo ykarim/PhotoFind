@@ -1,4 +1,4 @@
-package org.photofind.ui.app;
+package org.photofind;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
