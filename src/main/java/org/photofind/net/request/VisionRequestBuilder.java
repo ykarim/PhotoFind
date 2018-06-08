@@ -1,50 +1,23 @@
 package org.photofind.net.request;
 
 import org.photofind.media.Picture;
-import org.photofind.net.ParameterList;
 import org.photofind.net.Subscription;
-import org.photofind.net.vision.VisionParameterBuilder;
-import org.photofind.net.vision.VisionURIBuilder;
 
-import java.util.ArrayList;
+import java.net.URI;
 
 public class VisionRequestBuilder {
 
-    private VisionURIBuilder visionURIBuilder;
-    private VisionParameterBuilder visionParameterBuilder = new VisionParameterBuilder();
+    private static String ANALYZE_FULL_REQUEST = "https://westcentralus.api.cognitive.microsoft.com/vision/v2.0/analyze" +
+            "?visualFeatures=Categories%2CTags%2CDescription%2CFaces%2CImageType%2CColor%2CAdult" +
+            "&details=Celebrities%2CLandmarks" +
+            "&language=en";
 
-    public VisionRequestBuilder(String region, String API_VERSION) {
-        visionURIBuilder = new VisionURIBuilder(region, API_VERSION);
-    }
-
-    //Create better enums so that vis features and details are separate
-    public VisionRequest createAnaylzeRequest(ArrayList<VisionParameterBuilder.AnalyzeImageParamValue> visualFeatures,
-                                              ArrayList<VisionParameterBuilder.AnalyzeImageParamValue> details,
-                                              VisionParameterBuilder.AnalyzeImageParamValue language,
-                                              Picture picture) {
-        ParameterList parameterList = new ParameterList();
-
-        if (visualFeatures != null && visualFeatures.size() > 0) {
-            parameterList.addParameter(
-                    visionParameterBuilder.createAnalyzeParameter(
-                            VisionParameterBuilder.AnalyzeImageParamName.VISUAL_FEATURES, visualFeatures));
-        }
-
-        if (details != null && details.size() > 0) {
-            parameterList.addParameter(
-                    visionParameterBuilder.createAnalyzeParameter(
-                            VisionParameterBuilder.AnalyzeImageParamName.DETAILS, details));
-        }
-
-        if (language != null) {
-            parameterList.addParameter(VisionParameterBuilder.AnalyzeImageParamName.LANGUAGE.getParameterName(),
-                    language.getParameterValue());
-        }
+    public static VisionPostRequest createAnalyzeRequest(Picture picture) {
 
         VisionPostRequest visionPostRequest =
-                new VisionPostRequest(visionURIBuilder.getAnalyzeImageURI(parameterList), VisionFunction.ANALYZE);
+                new VisionPostRequest(URI.create(ANALYZE_FULL_REQUEST), VisionRequest.RequestFunction.ANALYZE);
         visionPostRequest.attachImage(picture);
-        visionPostRequest.setSubscriptionKey(Subscription.getSubscriptionKey()); //Do we want to set subkey here?
+        visionPostRequest.setSubscriptionKey(Subscription.getSubscriptionKey());
 
         return visionPostRequest;
     }

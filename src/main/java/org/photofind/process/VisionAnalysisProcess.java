@@ -9,9 +9,7 @@ import org.photofind.net.request.VisionRequest;
 import org.photofind.net.request.VisionRequestBuilder;
 import org.photofind.net.response.VisionResponse;
 import org.photofind.net.response.data.VisionAnalyzeResponse;
-import org.photofind.net.vision.VisionParameterBuilder;
 import org.photofind.process.watcher.RequestProcessWatcher;
-import org.photofind.util.VisionSettings;
 
 import java.util.ArrayList;
 
@@ -19,14 +17,12 @@ import java.util.ArrayList;
 public class VisionAnalysisProcess extends Task<ArrayList<Picture>> implements RequestProcessWatcher {
 
     private ArrayList<Picture> pictures = new ArrayList<>();
-    private VisionRequestBuilder requestBuilder;
     private int analyzedCount = 0;
     private int totalCount;
 
     private double sentRequests;
 
     public VisionAnalysisProcess(Picture picture) {
-        requestBuilder = new VisionRequestBuilder(VisionSettings.REGION, VisionSettings.VERSION);
         Connection.getRequestProcessor().addWatcher(this);
 
         this.pictures.add(picture);
@@ -34,7 +30,6 @@ public class VisionAnalysisProcess extends Task<ArrayList<Picture>> implements R
     }
 
     public VisionAnalysisProcess(ArrayList<Picture> pictures) {
-        requestBuilder = new VisionRequestBuilder(VisionSettings.REGION, VisionSettings.VERSION);
         Connection.getRequestProcessor().addWatcher(this);
 
         this.pictures = pictures;
@@ -83,22 +78,7 @@ public class VisionAnalysisProcess extends Task<ArrayList<Picture>> implements R
     }
 
     private VisionRequest createAnalyzeRequest(Picture picture) {
-        //Create easier way to do this than 100 wrapper classes. Feature: addAll() method to specify all param values
-        ArrayList<VisionParameterBuilder.AnalyzeImageParamValue> visualFeatures = new ArrayList<>();
-        visualFeatures.add(VisionParameterBuilder.AnalyzeImageParamValue.CATEGORIES);
-        visualFeatures.add(VisionParameterBuilder.AnalyzeImageParamValue.TAGS);
-        visualFeatures.add(VisionParameterBuilder.AnalyzeImageParamValue.DESCRIPTION);
-        visualFeatures.add(VisionParameterBuilder.AnalyzeImageParamValue.FACES);
-        visualFeatures.add(VisionParameterBuilder.AnalyzeImageParamValue.IMAGETYPE);
-        visualFeatures.add(VisionParameterBuilder.AnalyzeImageParamValue.COLOR);
-        visualFeatures.add(VisionParameterBuilder.AnalyzeImageParamValue.ADULT);
-
-        ArrayList<VisionParameterBuilder.AnalyzeImageParamValue> details = new ArrayList<>();
-        details.add(VisionParameterBuilder.AnalyzeImageParamValue.CELEBRITIES);
-        details.add(VisionParameterBuilder.AnalyzeImageParamValue.LANDMARKS);
-
-        return requestBuilder.createAnaylzeRequest(visualFeatures, details,
-                VisionParameterBuilder.AnalyzeImageParamValue.ENGLISH, picture);
+        return VisionRequestBuilder.createAnalyzeRequest(picture);
     }
 
     @Override

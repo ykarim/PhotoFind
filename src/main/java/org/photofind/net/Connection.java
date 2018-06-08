@@ -2,7 +2,6 @@ package org.photofind.net;
 
 import org.apache.http.HttpResponse;
 import org.photofind.net.processor.RequestProcessor;
-import org.photofind.net.request.VisionFunction;
 import org.photofind.net.request.VisionRequest;
 import org.photofind.net.response.VisionResponse;
 import org.photofind.net.response.VisionResponseParser;
@@ -35,7 +34,7 @@ public class Connection {
             //Should hold network thread and not current or UI thread if waiting
             //Should allow for more requests to be added to queue during wait
             HttpResponse response = executorService.submit(requestProcessor).get();
-            return processResponse(request.getVisionFunction(), response);
+            return processResponse(request.getFunction(), response);
         } catch (InterruptedException | ExecutionException e) {
             e.printStackTrace();
         }
@@ -50,7 +49,7 @@ public class Connection {
         for (VisionRequest request : requests) {
             try {
                 HttpResponse response = executorService.submit(requestProcessor).get();
-                responses.add(processResponse(request.getVisionFunction(), response));
+                responses.add(processResponse(request.getFunction(), response));
             } catch (InterruptedException | ExecutionException e) {
                 e.printStackTrace();
             }
@@ -59,31 +58,11 @@ public class Connection {
         return responses;
     }
 
-    private static VisionResponse processResponse(VisionFunction visionFunction, HttpResponse response) {
-        switch (visionFunction) {
-
-            case ANALYZE:
-                try {
-                    return VisionResponseParser.parseResponse(visionFunction, response);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            case DESCRIBE:
-                break;
-            case GET_HANDWRITTEN_TEXT:
-                break;
-            case GENERATE_THUMBNAIL:
-                break;
-            case LIST_DOMAIN_MODELS:
-                break;
-            case OBJECT_CHARACTER_RECOG:
-                break;
-            case RECOG_DOMAIN_CONTENT:
-                break;
-            case RECOG_TEXT:
-                break;
-            case TAG_IMAGE:
-                break;
+    private static VisionResponse processResponse(VisionRequest.RequestFunction requestFunction, HttpResponse response) {
+        try {
+            return VisionResponseParser.parseResponse(requestFunction, response);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
         return null;

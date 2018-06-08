@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import org.photofind.media.descriptors.Caption;
 import org.photofind.media.descriptors.Description;
 import org.photofind.media.descriptors.Tag;
-import org.photofind.net.request.VisionFunction;
+import org.photofind.net.request.VisionRequest;
 import org.photofind.net.response.data.VisionAnalyzeResponse;
 
 import java.io.IOException;
@@ -18,32 +18,15 @@ public class VisionResponseParser {
     /**
      * Creates new picture file from response
      *
-     * @param function Contains vision function requested
+     * @param requestFunction Contains vision function requested
      */
     //Maybe create a system used for requests and repsonses where post and get funcs can be easily tagged and identified
     //Maybe a complex enum of both
     //Also func wont always return PictureDescriptor
-    public static VisionResponse parseResponse(VisionFunction function, HttpResponse response) throws IOException {
-        switch (function) {
-
+    public static VisionResponse parseResponse(VisionRequest.RequestFunction requestFunction, HttpResponse response) throws IOException {
+        switch (requestFunction) {
             case ANALYZE:
                 return parseAnalyzeResponse(response);
-            case DESCRIBE:
-                break;
-            case GET_HANDWRITTEN_TEXT:
-                break;
-            case GENERATE_THUMBNAIL:
-                break;
-            case LIST_DOMAIN_MODELS:
-                break;
-            case OBJECT_CHARACTER_RECOG:
-                break;
-            case RECOG_DOMAIN_CONTENT:
-                break;
-            case RECOG_TEXT:
-                break;
-            case TAG_IMAGE:
-                break;
         }
 
         return null;

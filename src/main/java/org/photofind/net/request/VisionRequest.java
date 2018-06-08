@@ -6,7 +6,11 @@ public interface VisionRequest {
 
     HttpUriRequest getRequest();
 
-    VisionFunction getVisionFunction();
+    RequestFunction getFunction();
 
     void setSubscriptionKey(String subscriptionKey);
+
+    enum RequestFunction {
+        ANALYZE
+    }
 }

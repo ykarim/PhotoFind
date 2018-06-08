@@ -8,11 +8,12 @@ import java.net.URI;
 public class VisionGetRequest implements VisionRequest {
 
     private HttpGet httpGet;
-    private VisionFunction visionFunction;
+    private final String SUBSCRIPTION_HEADER = "Ocp-Apim-Subscription-Key";
+    private RequestFunction function;
 
-    public VisionGetRequest(URI uri, VisionFunction visionFunction) {
+    public VisionGetRequest(URI uri, RequestFunction function) {
         httpGet = new HttpGet(uri);
-        this.visionFunction = visionFunction;
+        this.function = function;
     }
 
     @Override
@@ -21,12 +22,12 @@ public class VisionGetRequest implements VisionRequest {
     }
 
     @Override
-    public VisionFunction getVisionFunction() {
-        return visionFunction;
+    public RequestFunction getFunction() {
+        return function;
     }
 
     @Override
     public void setSubscriptionKey(String subscriptionKey) {
-        httpGet.setHeader(RequestStrings.SUBSCRIPTION_HEADER, subscriptionKey);
+        httpGet.setHeader(SUBSCRIPTION_HEADER, subscriptionKey);
     }
 }

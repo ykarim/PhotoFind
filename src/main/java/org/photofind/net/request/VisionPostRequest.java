@@ -13,12 +13,14 @@ import java.net.URI;
 public class VisionPostRequest implements VisionRequest {
 
     private HttpPost httpPost;
-    private VisionFunction visionFunction;
+    private final String SUBSCRIPTION_HEADER = "Ocp-Apim-Subscription-Key";
+    private final String FILE_MULTIPART_NAME = "file_upload";
+    private RequestFunction function;
 
     //URI may not be with parameters so maybe create own type - unconfirmed
-    VisionPostRequest(URI uri, VisionFunction visionFunction) {
+    VisionPostRequest(URI uri, RequestFunction function) {
         httpPost = new HttpPost(uri);
-        this.visionFunction = visionFunction;
+        this.function = function;
     }
 
     @Override
@@ -27,20 +29,20 @@ public class VisionPostRequest implements VisionRequest {
     }
 
     @Override
-    public VisionFunction getVisionFunction() {
-        return visionFunction;
+    public RequestFunction getFunction() {
+        return function;
     }
 
     //Why constantly set sub key shouldn't just get from somewhere
     @Override
     public void setSubscriptionKey(String subscriptionKey) {
-        httpPost.setHeader(RequestStrings.SUBSCRIPTION_HEADER, subscriptionKey);
+        httpPost.setHeader(SUBSCRIPTION_HEADER, subscriptionKey);
     }
 
     void attachImage(Picture picture) {
         HttpEntity newReq = MultipartEntityBuilder
                 .create()
-                .addBinaryBody(RequestStrings.FILE_MULTIPART_NAME, picture.getFile(),
+                .addBinaryBody(FILE_MULTIPART_NAME, picture.getFile(),
                         ContentType.DEFAULT_BINARY, picture.getFile().getName())
                 .build();
         httpPost.setEntity(newReq);
