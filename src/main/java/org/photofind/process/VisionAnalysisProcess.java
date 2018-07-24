@@ -55,6 +55,7 @@ public class VisionAnalysisProcess extends Task<ArrayList<Picture>> implements R
                 ArrayList<Tag> responseTags = analyzeResponse.getTags();
                 Description responseDescription = analyzeResponse.getDescription();
 
+                //Why not setTags()?
                 if (responseTags != null) {
                     pictures.get(index).getTags().addAll(responseTags);
                 }

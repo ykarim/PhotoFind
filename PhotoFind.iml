@@ -27,5 +27,15 @@
     <orderEntry type="library" name="Maven: net.java.dev.jna:jna-platform:4.5.1" level="project" />
     <orderEntry type="library" name="Maven: de.jensd:fontawesomefx-fontawesome:4.7.0-5" level="project" />
     <orderEntry type="library" scope="RUNTIME" name="Maven: de.jensd:fontawesomefx-commons:8.15" level="project" />
+    <orderEntry type="library" name="Maven: io.lettuce:lettuce-core:5.1.0.M1" level="project" />
+    <orderEntry type="library" name="Maven: io.projectreactor:reactor-core:3.1.6.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.reactivestreams:reactive-streams:1.0.2" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-common:4.1.24.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-transport:4.1.24.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-buffer:4.1.24.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-resolver:4.1.24.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-handler:4.1.24.Final" level="project" />
+    <orderEntry type="library" name="Maven: io.netty:netty-codec:4.1.24.Final" level="project" />
+    <orderEntry type="library" name="Maven: org.xerial:sqlite-jdbc:3.23.1" level="project" />
   </component>
 </module>

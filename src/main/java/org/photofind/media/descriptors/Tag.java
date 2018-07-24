@@ -1,6 +1,8 @@
 package org.photofind.media.descriptors;
 
-public class Tag {
+import java.io.Serializable;
+
+public class Tag implements Serializable {
 
     private String name;
     private Double confidence;
@@ -27,6 +29,11 @@ public class Tag {
         } else {
             this.confidence = confidence;
         }
+    }
+
+    public Tag(Tag tag) {
+        this(tag.getName());
+        this.confidence = new Double(confidence);
     }
 
     public String getName() {

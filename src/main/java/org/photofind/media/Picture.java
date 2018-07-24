@@ -4,10 +4,11 @@ import org.photofind.media.descriptors.Description;
 import org.photofind.media.descriptors.Tag;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public class Picture extends MediaFile {
+public class Picture extends MediaFile implements Serializable {
 
     //Pic ID
     private final String id;
@@ -26,7 +27,8 @@ public class Picture extends MediaFile {
         this.name = file.getName();
     }
 
-    Picture(File file, String id, String name) {
+    //mb save space by storing filepath in memory and load by need
+    public Picture(File file, String id, String name) {
         super(file);
 
         if (id == null || id.isEmpty()) {
@@ -64,7 +66,7 @@ public class Picture extends MediaFile {
         }
     }
 
-    Picture(File file, String id, String name, ArrayList<Tag> tags, Description description) {
+    public Picture(File file, String id, String name, ArrayList<Tag> tags, Description description) {
         super(file);
 
         if (id == null || id.isEmpty()) {
@@ -90,6 +92,16 @@ public class Picture extends MediaFile {
         } else {
             this.description = description;
         }
+    }
+
+    public Picture(Picture picture) {
+        this(picture.getFile(), picture.getId(), picture.getName());
+
+        ArrayList<Tag> newTags = new ArrayList<>();
+        picture.getTags().forEach(tag -> newTags.add(new Tag(tag)));
+        this.tags = newTags;
+
+        this.description = new Description(picture.getDescription());
     }
 
     public String getId() {
@@ -142,5 +154,10 @@ public class Picture extends MediaFile {
 
     public void deleteDescription() {
         description = new Description(new ArrayList<>(), new ArrayList<>());
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

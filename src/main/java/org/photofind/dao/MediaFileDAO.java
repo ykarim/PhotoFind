@@ -1,4 +1,4 @@
-package org.photofind.controller;
+package org.photofind.dao;
 
 import org.photofind.media.MediaFile;
 

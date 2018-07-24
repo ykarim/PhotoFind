@@ -8,7 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import org.photofind.controller.PictureDAOImpl;
+import org.photofind.dao.PictureDAOImpl;
 import org.photofind.media.Picture;
 import org.photofind.ui.image_info.ImageBox;
 import org.photofind.ui.util.AppController;

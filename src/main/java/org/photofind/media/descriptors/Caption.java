@@ -1,6 +1,8 @@
 package org.photofind.media.descriptors;
 
-public class Caption {
+import java.io.Serializable;
+
+public class Caption implements Serializable {
 
     private String text;
     private Double confidence;
@@ -17,6 +19,10 @@ public class Caption {
         } else {
             this.confidence = confidence;
         }
+    }
+
+    public Caption(Caption caption) {
+        this(caption.text, new Double(caption.getConfidence()));
     }
 
     public String getText() {

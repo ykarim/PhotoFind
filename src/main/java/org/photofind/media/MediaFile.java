@@ -21,4 +21,9 @@ public class MediaFile {
     public String getAbsoluteFilePath() {
         return file.getAbsolutePath();
     }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
+    }
 }

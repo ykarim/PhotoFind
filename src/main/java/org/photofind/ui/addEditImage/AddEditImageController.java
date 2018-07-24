@@ -23,7 +23,7 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import org.photofind.controller.PictureDAOImpl;
+import org.photofind.dao.PictureDAOImpl;
 import org.photofind.media.Picture;
 import org.photofind.media.descriptors.Caption;
 import org.photofind.media.descriptors.Tag;
@@ -426,11 +426,15 @@ public class AddEditImageController implements AppController {
     }
 
     private void savePicture() {
-        Picture currentPicture = pictures.get(currentPictureIndex.get());
+        //Create copy to avoid directly modifying picture
+        Picture currentPictureUpdate = new Picture(pictures.get(currentPictureIndex.get()));
 
-        currentPicture.setName(textField_pictureName.getText().trim());
-        currentPicture.setTags(convertUITagsListToTags());
-        currentPicture.getDescription().setCaptions(convertUICaptionsListToCaptions());
+        currentPictureUpdate.setName(textField_pictureName.getText().trim());
+        currentPictureUpdate.setTags(convertUITagsListToTags());
+        currentPictureUpdate.getDescription().setCaptions(convertUICaptionsListToCaptions());
+
+        //Update stored picture by sending copy to DAO
+        pictureDAO.updatePicture(currentPictureUpdate);
     }
 
     private void refreshPage() {

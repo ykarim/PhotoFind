@@ -1,8 +1,9 @@
 package org.photofind.media.descriptors;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Description {
+public class Description implements Serializable {
 
     private ArrayList<Caption> captions;
     private ArrayList<Tag> tags;
@@ -20,6 +21,16 @@ public class Description {
         } else {
             this.tags = new ArrayList<>();
         }
+    }
+
+    public Description(Description description) {
+        ArrayList<Caption> newCaptions = new ArrayList<>();
+        description.getCaptions().forEach(caption -> newCaptions.add(new Caption(caption)));
+        this.captions = newCaptions;
+
+        ArrayList<Tag> newTags = new ArrayList<>();
+        description.getTags().forEach(tag -> newTags.add(new Tag(tag)));
+        this.tags = newTags;
     }
 
     public ArrayList<Caption> getCaptions() {

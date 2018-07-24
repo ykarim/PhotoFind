@@ -10,7 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import org.photofind.controller.PictureDAOImpl;
+import org.photofind.dao.PictureDAOImpl;
 import org.photofind.media.Picture;
 import org.photofind.media.descriptors.Caption;
 import org.photofind.media.descriptors.Tag;

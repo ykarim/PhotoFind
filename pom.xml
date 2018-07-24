@@ -153,7 +153,17 @@
             <type>jar</type>
         </dependency>
 
+        <dependency>
+            <groupId>io.lettuce</groupId>
+            <artifactId>lettuce-core</artifactId>
+            <version>5.1.0.M1</version>
+        </dependency>
 
+        <dependency>
+            <groupId>org.xerial</groupId>
+            <artifactId>sqlite-jdbc</artifactId>
+            <version>3.23.1</version>
+        </dependency>
     </dependencies>
 
 </project>
