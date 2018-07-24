@@ -77,6 +77,7 @@ public class ImageDetailsController implements AppController {
     @FXML
     protected void handleBackButtonAction(ActionEvent event) {
         SceneManager.returnToPreviousScene(AppScene.Type.SEARCH);
+        SceneManager.refreshCurrentScene();
     }
 
     @FXML
@@ -171,6 +172,10 @@ public class ImageDetailsController implements AppController {
 
     @Override
     public void refresh() {
+        //Replace current picture with updated picture retrieved from DAO
+        currentPicture = pictureDAO.getPictureById(currentPicture.getId());
+
+        label_nameLabel.setText(currentPicture.getName());
         label_tagsLabel.setText(generateTagString(currentPicture.getTags()));
         label_captionsLabel.setText(generateCaptionsString(currentPicture.getDescription().getCaptions()));
     }
