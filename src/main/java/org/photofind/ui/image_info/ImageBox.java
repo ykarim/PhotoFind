@@ -77,7 +77,7 @@ public class ImageBox extends VBox {
 //        imageview_image.fitHeightProperty().bind(anchorPane_imageHolder.heightProperty());
         imageview_image.fitWidthProperty().bind(hBox_imageHeader.widthProperty()); //hacky and why?
 
-        label_filename.setText(picture.getFile().getName());
+        label_filename.setText(picture.getName());
 
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy HH:mm");
         label_editdate.setText(sdf.format(picture.getFile().lastModified()));
