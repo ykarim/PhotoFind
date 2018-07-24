@@ -3,7 +3,6 @@ package org.photofind.ui.settings;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import org.photofind.net.Subscription;
 import org.photofind.ui.util.AppController;
@@ -31,7 +30,7 @@ public class SettingsController implements AppController {
 
     @FXML
     protected void handleBackButtonAction(ActionEvent event) {
-        returnToPreviousScene(event);
+        returnToPreviousScene();
     }
 
     @FXML
@@ -40,7 +39,7 @@ public class SettingsController implements AppController {
 
         if (validateInput()) {
             Subscription.setSubscriptionKey(subKey);
-            returnToPreviousScene(event);
+            returnToPreviousScene();
         }
     }
 
@@ -54,7 +53,7 @@ public class SettingsController implements AppController {
         return validInput;
     }
 
-    private void returnToPreviousScene(Event event) {
+    private void returnToPreviousScene() {
         SceneManager.returnToPreviousScene();
     }
 

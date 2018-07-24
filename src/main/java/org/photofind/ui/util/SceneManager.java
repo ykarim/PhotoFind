@@ -36,7 +36,7 @@ public class SceneManager {
 
     public static void returnToPreviousScene() {
         //Must return to element at (index = size-2) which represents previous scene
-        if (scenes.size() > 2 && scenes.get(scenes.size() - 2) != null) {
+        if (scenes.size() >= 2 && scenes.get(scenes.size() - 2) != null) {
             AppScene previousScene = scenes.get(scenes.size() - 2);
             if (previousScene.getStarted()) {
                 mainScene.setRoot(previousScene.getParent());
