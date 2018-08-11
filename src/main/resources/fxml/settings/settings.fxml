@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.*?>
 <?import com.jfoenix.validation.RequiredFieldValidator?>
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
-<?import javafx.geometry.Insets?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.layout.*?>
@@ -62,10 +61,29 @@
                 <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="600.0">
                     <children>
                         <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-                               text="Microsoft Computer Vision API Key" HBox.hgrow="ALWAYS"/>
+                               text="Vision Provider:" HBox.hgrow="ALWAYS"/>
+                        <JFXRadioButton fx:id="radio_msvision" maxHeight="1.7976931348623157E308"
+                                        maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                        text="Microsoft Computer Vision" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets right="10.0"/>
+                            </HBox.margin>
+                        </JFXRadioButton>
+                        <JFXRadioButton fx:id="radio_gcvision" maxHeight="1.7976931348623157E308"
+                                        maxWidth="1.7976931348623157E308" mnemonicParsing="false"
+                                        text="Google Cloud Vision" HBox.hgrow="ALWAYS">
+                            <HBox.margin>
+                                <Insets right="10.0"/>
+                            </HBox.margin>
+                        </JFXRadioButton>
+                    </children>
+                </HBox>
+                <HBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="600.0">
+                    <children>
+                        <Label maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="API Key"
+                               HBox.hgrow="ALWAYS"/>
                         <JFXTextField fx:id="textField_key" maxHeight="1.7976931348623157E308"
-                                      maxWidth="1.7976931348623157E308" promptText="Subscription Key"
-                                      HBox.hgrow="ALWAYS">
+                                      maxWidth="1.7976931348623157E308" promptText="API Key" HBox.hgrow="ALWAYS">
                             <validators>
                                 <RequiredFieldValidator message="Subscription Key Required!">
                                     <FontAwesomeIconView glyphName="WARNING" style="-fx-font-family: FontAwesome;"/>

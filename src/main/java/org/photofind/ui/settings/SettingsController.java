@@ -1,9 +1,11 @@
 package org.photofind.ui.settings;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.ToggleGroup;
 import org.photofind.net.Subscription;
 import org.photofind.ui.util.AppController;
 import org.photofind.ui.util.Bundle;
@@ -12,10 +14,18 @@ import org.photofind.ui.util.SceneManager;
 public class SettingsController implements AppController {
 
     @FXML
+    private JFXRadioButton radio_msvision;
+
+    @FXML
+    private JFXRadioButton radio_gcvision;
+
+    @FXML
     private JFXTextField textField_key;
 
     @FXML
     private JFXButton button_submit;
+
+    private ToggleGroup toggle_visionProvider = new ToggleGroup();
 
     @Override
     public void initialize(Bundle dataBundle) {
@@ -26,6 +36,19 @@ public class SettingsController implements AppController {
                 textField_key.validate();
             }
         });
+
+        radio_msvision.setToggleGroup(toggle_visionProvider);
+        radio_gcvision.setToggleGroup(toggle_visionProvider);
+
+        switch (Subscription.getCurrentSubscriptionProvider()) {
+
+            case GOOGLE_CLOUD:
+                radio_gcvision.setSelected(true);
+                break;
+            case MICROSOFT_VISION:
+                radio_msvision.setSelected(true);
+                break;
+        }
     }
 
     @FXML
@@ -39,6 +62,13 @@ public class SettingsController implements AppController {
 
         if (validateInput()) {
             Subscription.setSubscriptionKey(subKey);
+
+            if (toggle_visionProvider.getSelectedToggle().equals(radio_msvision)) {
+                Subscription.setCurrentSubscriptionProvider(Subscription.Provider.MICROSOFT_VISION);
+            } else if (toggle_visionProvider.getSelectedToggle().equals(radio_gcvision)) {
+                Subscription.setCurrentSubscriptionProvider(Subscription.Provider.GOOGLE_CLOUD);
+            }
+
             returnToPreviousScene();
         }
     }
