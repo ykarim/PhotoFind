@@ -1,14 +1,12 @@
 package org.photofind.net.request;
 
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpUriRequest;
 
 import java.net.URI;
 
-public class VisionGetRequest implements VisionRequest {
+public abstract class VisionGetRequest implements VisionRequest {
 
     private HttpGet httpGet;
-    private final String SUBSCRIPTION_HEADER = "Ocp-Apim-Subscription-Key";
     private RequestFunction function;
 
     public VisionGetRequest(URI uri, RequestFunction function) {
@@ -17,7 +15,7 @@ public class VisionGetRequest implements VisionRequest {
     }
 
     @Override
-    public HttpUriRequest getRequest() {
+    public HttpGet getRequest() {
         return httpGet;
     }
 
@@ -27,7 +25,5 @@ public class VisionGetRequest implements VisionRequest {
     }
 
     @Override
-    public void setSubscriptionKey(String subscriptionKey) {
-        httpGet.setHeader(SUBSCRIPTION_HEADER, subscriptionKey);
-    }
+    public abstract void setSubscriptionKey(String subscriptionKey);
 }

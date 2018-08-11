@@ -284,7 +284,7 @@ public class AddEditImageController implements AppController {
                 startPictureAnalysis(yesButtonEvent);
             } else if (mode.equals(AddEditImageScene.Mode.EDIT)) {
                 //Picture is sent as reference to picture in DAO so saving here will update picture in DAO
-                savePicture();
+                updatePicture();
                 confirmationDialog.close();
                 openRefreshedImageDetailsScene();
             }
@@ -426,6 +426,15 @@ public class AddEditImageController implements AppController {
     }
 
     private void savePicture() {
+        //Create copy to avoid directly modifying picture
+        Picture currentPicture = pictures.get(currentPictureIndex.get());
+
+        currentPicture.setName(textField_pictureName.getText().trim());
+        currentPicture.setTags(convertUITagsListToTags());
+        currentPicture.getDescription().setCaptions(convertUICaptionsListToCaptions());
+    }
+
+    private void updatePicture() {
         //Create copy to avoid directly modifying picture
         Picture currentPictureUpdate = new Picture(pictures.get(currentPictureIndex.get()));
 

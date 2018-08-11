@@ -5,6 +5,8 @@ import org.photofind.net.processor.RequestProcessor;
 import org.photofind.net.request.VisionRequest;
 import org.photofind.net.response.VisionResponse;
 import org.photofind.net.response.VisionResponseParser;
+import org.photofind.net.response.parser.gcloudvision.GCloudVisionResponseParser;
+import org.photofind.net.response.parser.msvision.MSVisionResponseParser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ public class Connection {
 
     private static ExecutorService executorService = Executors.newCachedThreadPool();
     private static RequestProcessor requestProcessor = new RequestProcessor();
+    private static VisionResponseParser visionResponseParser = null;
 
     public static RequestProcessor getRequestProcessor() {
         return requestProcessor;
@@ -59,8 +62,19 @@ public class Connection {
     }
 
     private static VisionResponse processResponse(VisionRequest.RequestFunction requestFunction, HttpResponse response) {
+        //TODO: Change so that previous current provider is checked to prevent redundant creation
+        switch (VisionProvider.getCurrentVisionProvider()) {
+
+            case GOOGLE_CLOUD:
+                visionResponseParser = new GCloudVisionResponseParser();
+                break;
+            case MICROSOFT_VISION:
+                visionResponseParser = new MSVisionResponseParser();
+                break;
+        }
+
         try {
-            return VisionResponseParser.parseResponse(requestFunction, response);
+            return visionResponseParser.parseResponse(requestFunction, response);
         } catch (IOException e) {
             e.printStackTrace();
         }

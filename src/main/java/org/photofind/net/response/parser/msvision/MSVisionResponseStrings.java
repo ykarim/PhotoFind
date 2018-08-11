@@ -1,6 +1,6 @@
-package org.photofind.net.response;
+package org.photofind.net.response.parser.msvision;
 
-class ResponseStrings {
+class MSVisionResponseStrings {
 
     //cREATE A STANDARD FOR NAMING
     static String DESCRIPTION_OBJECT = "description";
