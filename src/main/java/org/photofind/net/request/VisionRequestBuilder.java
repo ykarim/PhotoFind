@@ -2,7 +2,6 @@ package org.photofind.net.request;
 
 import org.photofind.media.Picture;
 import org.photofind.net.Subscription;
-import org.photofind.net.VisionProvider;
 import org.photofind.net.request.gcloudvision.GCloudVisionPostRequest;
 import org.photofind.net.request.msvision.MSVisionPostRequest;
 
@@ -20,7 +19,7 @@ public class VisionRequestBuilder {
     public static VisionPostRequest createAnalyzeRequest(Picture picture) {
         VisionPostRequest visionPostRequest = null;
 
-        switch (VisionProvider.getCurrentVisionProvider()) {
+        switch (Subscription.getCurrentSubscriptionProvider()) {
             default:
             case GOOGLE_CLOUD:
                 visionPostRequest = new GCloudVisionPostRequest(URI.create(GC_ANALYZE_FULL_REQUEST),

@@ -4,7 +4,6 @@ import org.apache.http.HttpResponse;
 import org.photofind.net.processor.RequestProcessor;
 import org.photofind.net.request.VisionRequest;
 import org.photofind.net.response.VisionResponse;
-import org.photofind.net.response.VisionResponseParser;
 import org.photofind.net.response.parser.gcloudvision.GCloudVisionResponseParser;
 import org.photofind.net.response.parser.msvision.MSVisionResponseParser;
 
@@ -18,7 +17,9 @@ public class Connection {
 
     private static ExecutorService executorService = Executors.newCachedThreadPool();
     private static RequestProcessor requestProcessor = new RequestProcessor();
-    private static VisionResponseParser visionResponseParser = null;
+
+    private static GCloudVisionResponseParser gCloudVisionResponseParser = new GCloudVisionResponseParser();
+    private static MSVisionResponseParser msVisionResponseParser = new MSVisionResponseParser();
 
     public static RequestProcessor getRequestProcessor() {
         return requestProcessor;
@@ -62,19 +63,14 @@ public class Connection {
     }
 
     private static VisionResponse processResponse(VisionRequest.RequestFunction requestFunction, HttpResponse response) {
-        //TODO: Change so that previous current provider is checked to prevent redundant creation
-        switch (VisionProvider.getCurrentVisionProvider()) {
-
-            case GOOGLE_CLOUD:
-                visionResponseParser = new GCloudVisionResponseParser();
-                break;
-            case MICROSOFT_VISION:
-                visionResponseParser = new MSVisionResponseParser();
-                break;
-        }
-
         try {
-            return visionResponseParser.parseResponse(requestFunction, response);
+            switch (Subscription.getCurrentSubscriptionProvider()) {
+                default:
+                case GOOGLE_CLOUD:
+                    return gCloudVisionResponseParser.parseResponse(requestFunction, response);
+                case MICROSOFT_VISION:
+                    return msVisionResponseParser.parseResponse(requestFunction, response);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
