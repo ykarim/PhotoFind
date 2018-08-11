@@ -2,7 +2,7 @@ package org.photofind.net;
 
 public class Subscription {
 
-    private static Provider currentSubscriptionProvider = Provider.GOOGLE_CLOUD;
+    private static Provider currentSubscriptionProvider = Provider.NONE;
     private static String subscriptionKey = "";
 
     public static Provider getCurrentSubscriptionProvider() {
@@ -14,7 +14,7 @@ public class Subscription {
     }
 
     public enum Provider {
-        GOOGLE_CLOUD, MICROSOFT_VISION
+        GOOGLE_CLOUD, MICROSOFT_VISION, NONE
     }
 
     public static String getSubscriptionKey() {

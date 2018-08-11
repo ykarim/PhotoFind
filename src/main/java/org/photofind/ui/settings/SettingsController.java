@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ToggleGroup;
 import org.photofind.net.Subscription;
+import org.photofind.preferences.PreferencesStore;
 import org.photofind.ui.util.AppController;
 import org.photofind.ui.util.Bundle;
 import org.photofind.ui.util.SceneManager;
@@ -53,7 +54,9 @@ public class SettingsController implements AppController {
 
     @FXML
     protected void handleBackButtonAction(ActionEvent event) {
-        returnToPreviousScene();
+        if (validateInput()) {
+            returnToPreviousScene();
+        }
     }
 
     @FXML
@@ -70,6 +73,7 @@ public class SettingsController implements AppController {
             }
 
             returnToPreviousScene();
+            PreferencesStore.saveProgramPreferences();
         }
     }
 
